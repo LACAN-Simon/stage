@@ -52,15 +52,14 @@ iotlab-node --flash $CODEDIR/broadcast-example.iotlab-m3 -i $EXPID
 sleep 10
 # Run a script for logging and seeding
 iotlab-experiment script -i $EXPID --run $SITE,script=serial_script.sh
-# Wait for experiment termination
+# Wait for experiment termination 
 iotlab-experiment wait -i $EXPID --state Terminated
 #-------------------- LAUNCH EXPERIMENTS --------------------#
 
 
 #----------------------- RETRIEVE LOG -----------------------#
-ssh $IOTLAB "tar -C ~/.iot-lab/${EXPID}/ -cvzf $1.tar.gz serial_output" 
 mkdir $EXPDIR/log/$EXPID
-scp "$IOTLAB":~/$1.tar.gz $EXPDIR/log/$EXPID/$1.tar.gz
+tar $EXPDIR/log/$EXPID/ -cvzf $1.tar.gz serial_output" 
 cd $EXPDIR/log/$EXPID/
 tar -xvf $1.tar.gz 
 #----------------------- RETRIEVE LOG -----------------------#
