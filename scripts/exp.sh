@@ -14,7 +14,7 @@ fi
 LOGIN="lacan"
 SITE="lille"
 IOTLAB="$LOGIN@$SITE.iot-lab.info"
-CODEDIR="${HOME}/iot-lab/parts/contiki/examples/ipv6/simple-udp-rpl"
+CODEDIR="${HOME}/path/to/iot-lab/parts/contiki/examples/ipv6/simple-udp-rpl"
 EXPDIR="${HOME}/stage"
 #--------------------- DEFINE VARIABLES ---------------------#
 
