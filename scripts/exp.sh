@@ -59,7 +59,7 @@ iotlab-experiment wait -i $EXPID --state Terminated
 
 #----------------------- RETRIEVE LOG -----------------------#
 mkdir $EXPDIR/log/$EXPID
-tar $EXPDIR/log/$EXPID/ -cvzf $1.tar.gz serial_output" 
+tar $EXPDIR/log/$EXPID/ -cvzf $1.tar.gz serial_output 
 cd $EXPDIR/log/$EXPID/
 tar -xvf $1.tar.gz 
 #----------------------- RETRIEVE LOG -----------------------#
