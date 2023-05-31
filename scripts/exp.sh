@@ -7,11 +7,11 @@ set -e
 if [ "$#" -ne 6 ]; then
 	echo "Usage: $0 <exp name> <interval (s)> <payload size (B)> <exp duration (m)> <packets per seconds> <list of nodes>"
 	exit
-fi
+fi  
 #---------------------- TEST ARGUMENTS ----------------------#
 
 #--------------------- DEFINE VARIABLES ---------------------#
-LOGIN="yourlogin"
+LOGIN="lacan"
 SITE="lille"
 IOTLAB="$LOGIN@$SITE.iot-lab.info"
 CODEDIR="${HOME}/iot-lab/parts/contiki/examples/ipv6/simple-udp-rpl"
