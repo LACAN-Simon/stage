@@ -155,7 +155,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);
     for (i=0; i<NB_PACKETS; i++) {
-    	snprintf(send_buffer, sizeof(uint32_t)*8, "%lx", id+i);
+    	snprintf(send_buffer, sizeof(uint32_t)*8, "ID:%lx; T=%d", id+i, get_temperature());
     	printf("Sending broadcast;%s\n", send_buffer);
     	uip_create_linklocal_allnodes_mcast(&addr);
     	simple_udp_sendto(&broadcast_connection, send_buffer, SEND_BUFFER_SIZE, &addr);
