@@ -158,7 +158,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     	unsigned int temp = temperature_sensor.value(0);
 	char t = "%d.d%",temp/10,temp-(temp/10)*10;
 	float res = atof(t);
-	snprintf(send_buffer, sizeof(uint32_t)*8, "ID:%lx; T=", id+i,temp);
+	snprintf(send_buffer, sizeof(uint32_t)*8, "ID:%lx; T=", id+i,res);
     	printf("Sending broadcast;%s\n", send_buffer);
     	uip_create_linklocal_allnodes_mcast(&addr);
     	simple_udp_sendto(&broadcast_connection, send_buffer, SEND_BUFFER_SIZE, &addr);
