@@ -2,7 +2,7 @@
 # Script from : https://www.iot-lab.info/docs/tools/run-script/
 
 # Redirect all nodes serial output to a file
-readonly OUTFILE="$EXPDIR/log/${EXP_ID}/serial_output"
+readonly OUTFILE="$EXPDIR/log/$EXP_ID/serial_output"
 
 # Get nodes list 
 NODES=$(iotlab-experiment get -d -i $EXP_ID | jq '.[]' | jq @sh)
