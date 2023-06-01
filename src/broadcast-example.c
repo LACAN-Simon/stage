@@ -156,6 +156,8 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     id = pcg32_random_r(&rng);
     for (i=0; i<NB_PACKETS; i++) {
     	unsigned int temp = temperature_sensor.value(0);
+	char t = "%d.d%",temp/10,temp-(temp/10)*10;
+	float res = atof(t);
 	snprintf(send_buffer, sizeof(uint32_t)*8, "ID:%lx; T=", id+i,temp);
     	printf("Sending broadcast;%s\n", send_buffer);
     	uip_create_linklocal_allnodes_mcast(&addr);
