@@ -40,7 +40,6 @@ make TARGET=iotlab-m3 -j8 || { echo "Compilation failed."; exit 1; }
 #--------------------- COMPILE FIRMWARE ---------------------#
 
 #-------------------- LAUNCH EXPERIMENTS --------------------#
-mkdir $EXPDIR/log/$EXPID
 cd $EXPDIR/scripts
 
 # Launch the experiment and obtain its ID
@@ -60,6 +59,7 @@ iotlab-experiment wait -i $EXPID --state Terminated
 
 #----------------------- RETRIEVE LOG -----------------------#
 tar $EXPDIR/log/$EXPID/ -cvzf $1.tar.gz serial_output 
+mkdir $EXPDIR/log/$EXPID
 cd $EXPDIR/log/$EXPID/
 tar -xvf $1.tar.gz 
 #----------------------- RETRIEVE LOG -----------------------#
