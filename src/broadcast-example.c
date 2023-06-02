@@ -88,11 +88,7 @@ static void config_pressure()
   pressure_sensor.configure(PRESSURE_SENSOR_DATARATE, LPS331AP_P_12_5HZ_T_1HZ);
   SENSORS_ACTIVATE(pressure_sensor);
 }
-static void config_temperature()
-{
-  temperature_sensor.configure(SENSORS_ACTIVATE, LPS331AP_P_12_5HZ_T_1HZ);
-  SENSORS_ACTIVATE(temperature_sensor);
-}
+
 static void config_light()
 {
   light_sensor.configure(LIGHT_SENSOR_SOURCE, ISL29020_LIGHT__AMBIENT);
@@ -106,12 +102,7 @@ static float process_pressure()
   pressure = pressure_sensor.value(0);
   return (float)pressure / PRESSURE_SENSOR_VALUE_SCALE;
 }
-static float process_temperature()
-{
-  int temp;
-  temp = temperature_sensor.value(0);
-  return (float)temp;
-}
+
 static float process_light()
 {
   int light_val = light_sensor.value(0);
@@ -195,11 +186,9 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     for (i=0; i<NB_PACKETS; i++) { 
 	config_pressure();
 	config_light();
-	config_temperature();
-	float t = process_temperature();
 	float l = process_light();
 	float p = process_pressure();
-	snprintf(send_buffer, sizeof(uint32_t)*8, "ID:%lx; P=%f; T=%f; L=%f", id+i,p,t,l);
+	snprintf(send_buffer, sizeof(uint32_t)*8, "ID:%lx; P=%f; L=%f", id+i,p,l);
     	printf("Sending broadcast;%s\n", send_buffer);
     	uip_create_linklocal_allnodes_mcast(&addr);
     	simple_udp_sendto(&broadcast_connection, send_buffer, SEND_BUFFER_SIZE, &addr);
