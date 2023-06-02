@@ -90,7 +90,7 @@ static void config_pressure()
 }
 static void config_temperature()
 {
-  temperature_sensor.configure(SENSOR_ACTIVATE, LPS331AP_P_12_5HZ_T_1HZ);
+  temperature_sensor.configure(SENSORS_ACTIVATE, LPS331AP_P_12_5HZ_T_1HZ);
   SENSORS_ACTIVATE(temperature_sensor);
 }
 static void config_light()
