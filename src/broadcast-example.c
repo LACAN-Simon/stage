@@ -38,6 +38,7 @@
 #include "dev/serial-line.h"
 #include "net/ipv6/uip-ds6.h"
 #include "lps331ap.h"
+#include "lps331ap_params.h"
 #include "simple-udp.h"
 
 #include <stdio.h>
