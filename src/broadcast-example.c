@@ -40,6 +40,8 @@
 #include "lps331ap.h"
 #include "simple-udp.h"
 #include "dev/pressure-sensor.h"
+#include "dev/light-sensor.h"
+#include "dev/temperature-sensor.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -86,12 +88,35 @@ static void config_pressure()
   pressure_sensor.configure(PRESSURE_SENSOR_DATARATE, LPS331AP_P_12_5HZ_T_1HZ);
   SENSORS_ACTIVATE(pressure_sensor);
 }
-
+static void config_temperature()
+{
+  temperature_sensor.configure(TEMPERATURE_SENSOR_DATARATE, LPS331AP_P_12_5HZ_T_1HZ);
+  SENSORS_ACTIVATE(temperature_sensor);
+}
+static void config_light()
+{
+  light_sensor.configure(LIGHT_SENSOR_SOURCE, ISL29020_LIGHT__AMBIENT);
+  light_sensor.configure(LIGHT_SENSOR_RESOLUTION, ISL29020_RESOLUTION__16bit);
+  light_sensor.configure(LIGHT_SENSOR_RANGE, ISL29020_RANGE__1000lux);
+  SENSORS_ACTIVATE(light_sensor);
+}
 static float process_pressure()
 {
   int pressure;
   pressure = pressure_sensor.value(0);
   return (float)pressure / PRESSURE_SENSOR_VALUE_SCALE;
+}
+static float process_temperature()
+{
+  int temp;
+  temp = temperature_sensor.value(0);
+  return (float)temperature / TEMPERATURE_SENSOR_VALUE_SCALE;
+}
+static float process_light()
+{
+  int light_val = light_sensor.value(0);
+  float light = ((float)light_val) / LIGHT_SENSOR_VALUE_SCALE;
+  return light;
 }
 
 // *Really* minimal PCG32 code / (c) 2014 M.E. O'Neill / pcg-random.org
@@ -169,8 +194,12 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     id = pcg32_random_r(&rng);
     for (i=0; i<NB_PACKETS; i++) { 
 	config_pressure();
-	float temp = process_pressure();
-	snprintf(send_buffer, sizeof(uint32_t)*8, "ID:%lx; T=%f", id+i,temp);
+	config_light();
+	config_temperature();
+	float t = process_temperature();
+	float l = process_light();
+	float p = process_pressure();
+	snprintf(send_buffer, sizeof(uint32_t)*8, "ID:%lx; P=%f; T=%f; L=%f", id+i,p,t,l);
     	printf("Sending broadcast;%s\n", send_buffer);
     	uip_create_linklocal_allnodes_mcast(&addr);
     	simple_udp_sendto(&broadcast_connection, send_buffer, SEND_BUFFER_SIZE, &addr);
