@@ -155,7 +155,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);
     for (i=0; i<NB_PACKETS; i++) {
-	int16_t temp = 12 ; 
+	int16_t temp ; 
         temp = lps331ap_read_temp(&lps331ap);
 	snprintf(send_buffer, sizeof(uint32_t)*8, "ID:%lx; T=%i", id+i,temp);
     	printf("Sending broadcast;%s\n", send_buffer);
