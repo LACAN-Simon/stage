@@ -39,7 +39,7 @@
 #include "net/ipv6/uip-ds6.h"
 #include "lps331ap.h"
 #include "simple-udp.h"
-
+#include "dev/pressure-sensor.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -79,6 +79,19 @@ receiver(struct simple_udp_connection *c,
 {
   printf("Received;%s\n",
          data);
+}
+
+static void config_pressure()
+{
+  pressure_sensor.configure(PRESSURE_SENSOR_DATARATE, LPS331AP_P_12_5HZ_T_1HZ);
+  SENSORS_ACTIVATE(pressure_sensor);
+}
+
+static float process_pressure()
+{
+  int pressure;
+  pressure = pressure_sensor.value(0);
+  return (float)pressure / PRESSURE_SENSOR_VALUE_SCALE;
 }
 
 // *Really* minimal PCG32 code / (c) 2014 M.E. O'Neill / pcg-random.org
@@ -155,8 +168,8 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);
     for (i=0; i<NB_PACKETS; i++) { 
-        int16_t temp ;
-	uint8_t  res = lps331ap_read_temp(&temp);
+	config_pressure();
+	float temp = process_pressure;
 	snprintf(send_buffer, sizeof(uint32_t)*8, "ID:%lx; T=%i", id+i,temp);
     	printf("Sending broadcast;%s\n", send_buffer);
     	uip_create_linklocal_allnodes_mcast(&addr);
