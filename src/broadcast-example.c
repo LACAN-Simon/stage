@@ -38,7 +38,6 @@
 #include "dev/serial-line.h"
 #include "net/ipv6/uip-ds6.h"
 #include "lps331ap.h"
-#include "lps331ap_params.h"
 #include "simple-udp.h"
 
 #include <stdio.h>
@@ -59,7 +58,7 @@
 #define SEND_TIME		(random_rand() % (SEND_INTERVAL))
 
 static struct simple_udp_connection broadcast_connection;
-static lps331ap_t lps331ap ;
+//static lps331ap_t lps331ap ;
 // *Really* minimal PCG32 code / (c) 2014 M.E. O'Neill / pcg-random.org
 // Licensed under Apache License 2.0 (NO WARRANTY, etc. see website)
 typedef struct { uint64_t state;  uint64_t inc; } pcg32_random_t;
@@ -156,7 +155,8 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);
     for (i=0; i<NB_PACKETS; i++) { 
-        int16_t temp = lps331ap_read_temp(&lps331ap);
+        int16_t temp ;
+	uint8_t  res = lps331ap_read_temp(&temp);
 	snprintf(send_buffer, sizeof(uint32_t)*8, "ID:%lx; T=%i", id+i,temp);
     	printf("Sending broadcast;%s\n", send_buffer);
     	uip_create_linklocal_allnodes_mcast(&addr);
