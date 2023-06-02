@@ -37,7 +37,8 @@
 #include "net/ip/uip.h"
 #include "dev/serial-line.h"
 #include "net/ipv6/uip-ds6.h"
-#include "dev/temperature-sensor.h"
+#include "lpsxxx.h"
+#include "lpsxxx_params.h"
 #include "simple-udp.h"
 
 #include <stdio.h>
@@ -155,10 +156,9 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);
     for (i=0; i<NB_PACKETS; i++) {
-    	unsigned int temp = temperature_sensor.value(0);
-	char t = "%d.d%",temp/10,temp-(temp/10)*10;
-	float res = atof(t);
-	snprintf(send_buffer, sizeof(uint32_t)*8, "ID:%lx; T=", id+i,res);
+	int16_t temp = 0;
+        lpsxxx_read_temp(&lpsxxx, &temp);
+	snprintf(send_buffer, sizeof(uint32_t)*8, "ID:%lx; T=%d.%u", id+i,(temp/100),(temp%100));
     	printf("Sending broadcast;%s\n", send_buffer);
     	uip_create_linklocal_allnodes_mcast(&addr);
     	simple_udp_sendto(&broadcast_connection, send_buffer, SEND_BUFFER_SIZE, &addr);
