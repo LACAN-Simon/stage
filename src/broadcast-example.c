@@ -37,7 +37,7 @@
 #include "net/ip/uip.h"
 #include "dev/serial-line.h"
 #include "net/ipv6/uip-ds6.h"
-#include "lps331ad.h"
+#include "lps331ap.h"
 #include "simple-udp.h"
 
 #include <stdio.h>
@@ -156,7 +156,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     for (i=0; i<NB_PACKETS; i++) {
 	int16_t temp = 0;
 	float temp ; 
-        lps331ad_read_temperature(&temp);
+        lps331ap_read_temperature(&temp);
 	snprintf(send_buffer, sizeof(uint32_t)*8, "ID:%lx; T=%d", id+i,temp);
     	printf("Sending broadcast;%s\n", send_buffer);
     	uip_create_linklocal_allnodes_mcast(&addr);
