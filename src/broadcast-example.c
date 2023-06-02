@@ -90,7 +90,7 @@ static void config_pressure()
 }
 static void config_temperature()
 {
-  temperature_sensor.configure(TEMPERATURE_SENSOR_DATARATE, LPS331AP_P_12_5HZ_T_1HZ);
+  temperature_sensor.configure(TEMPERATURE_SENSOR, LPS331AP_P_12_5HZ_T_1HZ);
   SENSORS_ACTIVATE(temperature_sensor);
 }
 static void config_light()
@@ -110,7 +110,7 @@ static float process_temperature()
 {
   int temp;
   temp = temperature_sensor.value(0);
-  return (float)temperature / TEMPERATURE_SENSOR_VALUE_SCALE;
+  return (float)temp;
 }
 static float process_light()
 {
