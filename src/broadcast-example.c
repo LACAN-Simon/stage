@@ -118,7 +118,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   uint32_t id;
   char *eptr;
   int i;
-  lps331ap_init(&lps331ap, &lps331ap_params[0]);
+  //lps331ap_init(&lps331ap, &lps331ap_params[0]);
   PROCESS_BEGIN();
 
   simple_udp_register(&broadcast_connection, UDP_PORT,
