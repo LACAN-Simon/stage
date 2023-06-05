@@ -73,11 +73,11 @@ receiver(struct simple_udp_connection *c,
          uint16_t sender_port,
          const uip_ipaddr_t *receiver_addr,
          uint16_t receiver_port,
-         const uint32_t *data,
-         uint32_t datalen)
+         const uint8_t *data,
+         uint16_t datalen)
 {
-  printf("R:%s\n",data);
-  printf("taille : %u\n", uip_datalen());
+  printf("Received;%s\n",
+         data);
 }
 
 
@@ -185,10 +185,12 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	config_light();
 	float l = process_light();
 	float p = process_pressure();
-	snprintf(send_buffer, sizeof(uint32_t)*100, "%.2f;%.2f;%lx", l,p,id+i);
+	snprintf(send_buffer, sizeof(uint32_t)*30, "%.2f;%.2f;%lx", l,p,id+i);
 	printf("Sending:%s\n", send_buffer);
     	uip_create_linklocal_allnodes_mcast(&addr);
     	simple_udp_sendto(&broadcast_connection, send_buffer, sizeof(send_buffer), &addr);
+	size_t send_buffer_size = strlen(send_buffer);
+	printf("Taille de send_buffer : %lu\n", (unsigned long)send_buffer_size);
     }
 
   }
