@@ -54,7 +54,7 @@
 
 #define NB_PACKETS 5
 
-#define SEND_BUFFER_SIZE 60
+#define SEND_BUFFER_SIZE 100
 #define SEND_INTERVAL_SECONDS 6
 #define SEND_INTERVAL		(SEND_INTERVAL_SECONDS * CLOCK_SECOND)
 #define SEND_TIME		(random_rand() % (SEND_INTERVAL))
@@ -186,11 +186,9 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     for (i=0; i<NB_PACKETS; i++) { 
 	config_pressure();
 	config_light();
-	float l1 = process_light();
-	float p1 = process_pressure();
-	float l = floorf(l1 * 100) / 100;
-	float p = floorf(p1 * 100) / 100;
-	snprintf(send_buffer, sizeof(uint32_t)*20, "%f;%f;%lx", l,p,id+i);
+	float l = process_light();
+	float p = process_pressure();
+	snprintf(send_buffer, sizeof(uint32_t)*50, "%.2f;%.2f;%lx", l,p,id+i);
     	printf("Sending broadcast;%s\n", send_buffer); 
     	uip_create_linklocal_allnodes_mcast(&addr);
     	simple_udp_sendto(&broadcast_connection, send_buffer, sizeof(send_buffer), &addr);
