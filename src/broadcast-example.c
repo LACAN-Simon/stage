@@ -79,7 +79,7 @@ receiver(struct simple_udp_connection *c,
   printf("R:%s\n",data);
   printf("taille : %u\n", uip_datalen());
 }*/
-void receive_callback(struct simple_udp_connection *c,
+void receiver(struct simple_udp_connection *c,
                       const uip_ipaddr_t *source_addr,
                       uint16_t source_port,
                       const uip_ipaddr_t *dest_addr,
