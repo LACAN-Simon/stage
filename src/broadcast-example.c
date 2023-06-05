@@ -51,16 +51,14 @@
 
 #define BEGIN_INTERVAL_SECONDS 10 
 #define BEGIN_INTERVAL  (BEGIN_INTERVAL_SECONDS * CLOCK_SECOND)
-
+#define UIP_BUFSIZE = 100
 #define NB_PACKETS 5
-#define UIP_CONF_BUFFER_SIZE 256
-#define SEND_BUFFER_SIZE 100
+
 #define SEND_INTERVAL_SECONDS 6
 #define SEND_INTERVAL		(SEND_INTERVAL_SECONDS * CLOCK_SECOND)
 #define SEND_TIME		(random_rand() % (SEND_INTERVAL))
 
 static struct simple_udp_connection broadcast_connection;
-//static lps331ap_t lps331ap ;
 // *Really* minimal PCG32 code / (c) 2014 M.E. O'Neill / pcg-random.org
 // Licensed under Apache License 2.0 (NO WARRANTY, etc. see website)
 typedef struct { uint64_t state;  uint64_t inc; } pcg32_random_t;
@@ -79,7 +77,6 @@ receiver(struct simple_udp_connection *c,
          const uint8_t *data,
          uint16_t datalen)
 {
-  datalen = 20;
   printf("R:%s\n",data);
 }
 
