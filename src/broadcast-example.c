@@ -91,7 +91,7 @@ void receiver(struct simple_udp_connection *c,
 
     // Afficher les octets du paquet
     printf("Packet data: ");
-    for (uint16_t i = 0; i < packet_length; i++) {
+    for (int i = 0; i < packet_length; i++) {
         printf("%02X ", packet_data[i]);
     }
     printf("\n");
