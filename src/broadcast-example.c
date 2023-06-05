@@ -77,11 +77,8 @@ receiver(struct simple_udp_connection *c,
          uint16_t datalen)
 {
   //printf("R:%s\n",data);
-  uint8_t received_data[30];  // Créez un tampon de réception de la même taille que le tampon envoyé (30 octets).
-  memcpy(received_data, data, datalen);  // Copiez les données reçues dans le nouveau tampon.
-  received_data[datalen] = '\0';  // Ajoutez un caractère de fin de chaîne pour l'affichage.
-
-  printf("R:%sfinito\n", received_data);
+  size_t q = strlen(data);
+  printf("La taille de la chaîne est : %lu\n", (unsigned long)q);
 
 }
 
