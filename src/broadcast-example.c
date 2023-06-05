@@ -192,7 +192,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	snprintf(send_buffer, sizeof(uint32_t)*100, "%.2f;%.2f;%lx", l,p,id+i);
 	//printf("Sending:%s\n", send_buffer);
 	size_t q = strlen(send_buffer);
-	printf("La taille de la chaîne est : %zu\n", q);
+	printf("La taille de la chaîne est : %lu\n", (unsigned long)q);
     	uip_create_linklocal_allnodes_mcast(&addr);
     	simple_udp_sendto(&broadcast_connection, send_buffer, sizeof(send_buffer), &addr);
     }
