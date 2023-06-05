@@ -81,7 +81,7 @@ receiver(struct simple_udp_connection *c,
   memcpy(received_data, data, datalen);  // Copiez les données reçues dans le nouveau tampon.
   received_data[datalen] = '\0';  // Ajoutez un caractère de fin de chaîne pour l'affichage.
 
-  printf("R:%s\n", received_data);
+  printf("R:%sfinito\n", received_data);
 
 }
 
@@ -190,7 +190,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	float l = process_light();
 	float p = process_pressure();
 	snprintf(send_buffer, sizeof(uint32_t)*100, "%.2f;%.2f;%lx", l,p,id+i);
-    	printf(send_buffer); 
+	printf("Sending:%s\n", send_buffer);
     	uip_create_linklocal_allnodes_mcast(&addr);
     	simple_udp_sendto(&broadcast_connection, send_buffer, sizeof(send_buffer), &addr);
     }
