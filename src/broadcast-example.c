@@ -186,8 +186,10 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     for (i=0; i<NB_PACKETS; i++) { 
 	config_pressure();
 	config_light();
-	float l = process_light();
-	float p = process_pressure();
+	float l1 = process_light();
+	float p1 = process_pressure();
+	float l = floorf(l1 * 100) / 100;
+	float p = floorf(p1 * 100) / 100;
 	snprintf(send_buffer, sizeof(uint32_t)*20, "%f;%f;%lx", l,p,id+i);
     	printf("Sending broadcast;%s\n", send_buffer); 
     	uip_create_linklocal_allnodes_mcast(&addr);
