@@ -49,8 +49,6 @@
 
 #define UDP_PORT 1234
 #define SEND_BUFFER_SIZE 120
-#define UIP_LLH_LEN 10
-#define UIP_IPUDPH_LEN 10
 #define BEGIN_INTERVAL_SECONDS 10 
 #define BEGIN_INTERVAL  (BEGIN_INTERVAL_SECONDS * CLOCK_SECOND)
 #define NB_PACKETS 5
@@ -78,10 +76,7 @@ receiver(struct simple_udp_connection *c,
          const uint8_t *data,
          uint16_t datalen)
 {
-  //printf("R:%s\n",data);
-  size_t q = strlen(data);
-  printf("La taille de la chaîne est : %lu\n", (unsigned long)q);
-
+  printf("R:%s\n",data);
 }
 
 static void config_pressure()
@@ -189,9 +184,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	float l = process_light();
 	float p = process_pressure();
 	snprintf(send_buffer, sizeof(uint32_t)*100, "%.2f;%.2f;%lx", l,p,id+i);
-	//printf("Sending:%s\n", send_buffer);
-	size_t q = strlen(send_buffer);
-	printf("La taille de la chaîne est : %lu\n", (unsigned long)q);
+	printf("Sending:%s\n", send_buffer);
     	uip_create_linklocal_allnodes_mcast(&addr);
     	simple_udp_sendto(&broadcast_connection, send_buffer, sizeof(send_buffer), &addr);
     }
