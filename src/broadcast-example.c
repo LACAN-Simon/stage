@@ -51,7 +51,6 @@
 
 #define BEGIN_INTERVAL_SECONDS 10 
 #define BEGIN_INTERVAL  (BEGIN_INTERVAL_SECONDS * CLOCK_SECOND)
-#define UIP_BUFSIZE = 100
 #define NB_PACKETS 5
 
 #define SEND_INTERVAL_SECONDS 6
@@ -186,7 +185,8 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	float l = process_light();
 	float p = process_pressure();
 	snprintf(send_buffer, sizeof(uint32_t)*50, "%.2f;%.2f;%lx", l,p,id+i);
-    	printf("Sending broadcast;%s\n", send_buffer); 
+    	printf(send_buffer); 
+	printf(sizeof(send_buffer);
     	uip_create_linklocal_allnodes_mcast(&addr);
     	simple_udp_sendto(&broadcast_connection, send_buffer, sizeof(send_buffer), &addr);
     }
