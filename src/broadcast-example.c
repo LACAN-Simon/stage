@@ -67,7 +67,7 @@ typedef struct { uint64_t state;  uint64_t inc; } pcg32_random_t;
 PROCESS(broadcast_example_process, "UDP broadcast example process");
 AUTOSTART_PROCESSES(&broadcast_example_process);
 /*---------------------------------------------------------------------------*/
-static void
+/*static void
 receiver(struct simple_udp_connection *c,
          const uip_ipaddr_t *sender_addr,
          uint16_t sender_port,
@@ -78,6 +78,23 @@ receiver(struct simple_udp_connection *c,
 {
   printf("R:%s\n",data);
   printf("taille : %u\n", uip_datalen());
+}*/
+void receiver(struct simple_udp_connection *c,
+                      const uip_ipaddr_t *source_addr,
+                      uint16_t source_port,
+                      const uip_ipaddr_t *dest_addr,
+                      uint16_t dest_port,
+                      const uint8_t *packet_data,
+                      uint16_t packet_length) {
+    printf("Received UDP packet:\n");
+    printf("Packet length: %u\n", packet_length);
+
+    // Afficher les octets du paquet
+    printf("Packet data: ");
+    for (uint16_t i = 0; i < packet_length; i++) {
+        printf("%02X ", packet_data[i]);
+    }
+    printf("\n");
 }
 
 static void config_pressure()
