@@ -65,6 +65,8 @@ cd $EXPDIR/scripts
 rm -r $1.tar.gz
 cd $EXPDIR/log/$EXPID/
 tar -xvf $1.tar.gz 
+cd ..
+cd log/$EXPID
 #----------------------- RETRIEVE LOG -----------------------#
 
 exit 0
