@@ -48,7 +48,7 @@
 #include <inttypes.h>
 
 #define UDP_PORT 1234
-
+#define SEND_BUFFER_SIZE 120
 #define BEGIN_INTERVAL_SECONDS 10 
 #define BEGIN_INTERVAL  (BEGIN_INTERVAL_SECONDS * CLOCK_SECOND)
 #define NB_PACKETS 5
