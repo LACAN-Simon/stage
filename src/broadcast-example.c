@@ -79,10 +79,9 @@ receiver(struct simple_udp_connection *c,
          const uint8_t *data,
          uint16_t datalen)
 {
-
-  printf("R:%s;%zu\n",data);
-  printf(sizeof(data));
-  printf("\n");
+  t = sizeof(data);
+  printf("R:%s\n",data);
+  printf("%zu\n",t);
 }
 
 static void config_pressure()
