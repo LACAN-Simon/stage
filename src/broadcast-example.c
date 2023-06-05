@@ -76,7 +76,13 @@ receiver(struct simple_udp_connection *c,
          const uint8_t *data,
          uint16_t datalen)
 {
-  printf("R:%s\n",data);
+  //printf("R:%s\n",data);
+  uint8_t received_data[30];  // Créez un tampon de réception de la même taille que le tampon envoyé (30 octets).
+  memcpy(received_data, data, datalen);  // Copiez les données reçues dans le nouveau tampon.
+  received_data[datalen] = '\0';  // Ajoutez un caractère de fin de chaîne pour l'affichage.
+
+  printf("R:%s\n", received_data);
+
 }
 
 static void config_pressure()
@@ -143,7 +149,6 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   uint32_t id;
   char *eptr;
   int i;
-  //lps331ap_init(&lps331ap, &lps331ap_params[0]);
   PROCESS_BEGIN();
 
   simple_udp_register(&broadcast_connection, UDP_PORT,
@@ -185,7 +190,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	float l = process_light();
 	float p = process_pressure();
 	snprintf(send_buffer, sizeof(uint32_t)*100, "%.2f;%.2f;%lx", l,p,id+i);
-    	//printf(send_buffer); 
+    	printf(send_buffer); 
     	uip_create_linklocal_allnodes_mcast(&addr);
     	simple_udp_sendto(&broadcast_connection, send_buffer, sizeof(send_buffer), &addr);
     }
