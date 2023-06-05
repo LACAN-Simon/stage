@@ -79,7 +79,7 @@ receiver(struct simple_udp_connection *c,
          const uint8_t *data,
          uint16_t datalen)
 {
-  printf("Received;%s\n",
+  printf("Received:%s\n",
          data);
 }
 
@@ -189,9 +189,9 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	float l = process_light();
 	float p = process_pressure();
 	snprintf(send_buffer, sizeof(uint32_t)*20, "%lx;%f;%f", id+i,p,l);
-    	printf("Sending broadcast;%s\n", send_buffer);
+    	printf("Sending broadcast;%s\n", send_buffer); 
     	uip_create_linklocal_allnodes_mcast(&addr);
-    	simple_udp_sendto(&broadcast_connection, send_buffer, SEND_BUFFER_SIZE, &addr);
+    	simple_udp_sendto(&broadcast_connection, send_buffer, sizeof(send_buffer), &addr);
     }
 
   }
