@@ -181,7 +181,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);
     for (i=0; i<NB_PACKETS; i++) { 
-	uint16_t s = 22;
+	uint16_t s = 12;
 	config_pressure();
 	config_light();
 	float l = process_light();
@@ -195,7 +195,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	    
 	size_t send_buffer_siz = strlen(send_buffer);
 	printf("Taille de send_buffer1 : %lu\n", (unsigned long)send_buffer_siz);
-	simple_udp_sendto(&broadcast_connection, send_buffer,send_buffer_si, &addr);
+	simple_udp_sendto(&broadcast_connection, send_buffer,s, &addr);
 	    
 	printf("Sending:%s\n", send_buffer);
 	size_t send_buffer_size = strlen(send_buffer);
