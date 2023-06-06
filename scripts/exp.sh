@@ -30,7 +30,7 @@ function ctrl_c() {
 
 #-------------------- CONFIGURE FIRMWARE --------------------#
 sed -i "s/#define\ SEND_INTERVAL_SECONDS\ .*/#define\ SEND_INTERVAL_SECONDS\ $2/g" $CODEDIR/broadcast-example.c
-sed -i "s/#define\ SEND_BUFFER_SIZE\ .*/#define\ SEND_BUFFER_SIZE\ $3/g" $CODEDIR/broadcast-example.c
+sed -i "s/#define\ SEND_BUFFER_SIZE\ .*/#define\ SEND_BUFFER_SIZE\ 100/g" $CODEDIR/broadcast-example.c
 sed -i "s/#define\ NB_PACKETS\ .*/#define\ NB_PACKETS\ $5/g" $CODEDIR/broadcast-example.c
 #-------------------- CONFIGURE FIRMWARE --------------------#
 
