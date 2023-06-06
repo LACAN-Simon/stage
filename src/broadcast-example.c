@@ -48,7 +48,7 @@
 #include <inttypes.h>
 
 #define UDP_PORT 1234
-#define SEND_BUFFER_SIZE 120
+#define SEND_BUFFER_SIZE 1000
 #define BEGIN_INTERVAL_SECONDS 10 
 #define BEGIN_INTERVAL  (BEGIN_INTERVAL_SECONDS * CLOCK_SECOND)
 #define NB_PACKETS 5
@@ -188,19 +188,8 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	float p = process_pressure();
 	snprintf(send_buffer, sizeof(uint32_t)*30, "%.2f;%.2f;%lx", l,p,id+i);
 	printf("Buffer=%s\n", send_buffer);   
-	size_t send_buffer_si = strlen(send_buffer);
-	printf("Taille de send_buffer0 : %lu\n", (unsigned long)send_buffer_si);
-	    
     	uip_create_linklocal_allnodes_mcast(&addr);
-	    
-	size_t send_buffer_siz = strlen(send_buffer);
-	printf("Taille de send_buffer1 : %lu\n", (unsigned long)send_buffer_siz);
-	
 	simple_udp_sendto(&broadcast_connection, send_buffer,s, &addr);
-	    
-	printf("Sending:%s\n", send_buffer);
-	size_t send_buffer_size = strlen(send_buffer);
-	printf("Taille de send_buffer2 : %lu\n", (unsigned long)send_buffer_size);
     }
 
   }
