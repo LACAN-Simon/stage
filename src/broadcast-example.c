@@ -195,7 +195,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	    
 	size_t send_buffer_siz = strlen(send_buffer);
 	printf("Taille de send_buffer1 : %lu\n", (unsigned long)send_buffer_siz);
-	simple_udp_sendto(&broadcast_connection, send_buffer,sizeof(send_buffer), &addr);
+	simple_udp_sendto(&broadcast_connection, send_buffer,send_buffer_si, &addr);
 	    
 	printf("Sending:%s\n", send_buffer);
 	size_t send_buffer_size = strlen(send_buffer);
