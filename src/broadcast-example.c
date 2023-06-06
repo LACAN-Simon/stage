@@ -187,7 +187,8 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	float l = process_light();
 	float p = process_pressure();
 	snprintf(send_buffer, sizeof(uint32_t)*30, "%.2f;%.2f;%lx", l,p,id+i);
-	printf("Buffer=%s\n", send_buffer);   
+	printf("Buffer=%s\n", send_buffer);  
+        printf("SEND_BUFFER_SIZE: %d\n", SEND_BUFFER_SIZE);
     	uip_create_linklocal_allnodes_mcast(&addr);
 	simple_udp_sendto(&broadcast_connection, send_buffer,s, &addr);
     }
