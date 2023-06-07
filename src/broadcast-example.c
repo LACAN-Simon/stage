@@ -148,7 +148,6 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   char *eptr;
   int i;
   PROCESS_BEGIN();
-  temperature_sensor = sensors_find(TEMPERATURE_SENSOR);
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
                       receiver);
