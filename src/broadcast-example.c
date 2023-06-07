@@ -166,7 +166,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   pcg32_srandom_r(&rng, initstate, initseq);
 
   etimer_set(&periodic_timer, SEND_INTERVAL);
-  printf("début");
+  printf("début\n");
   while(1) {
 
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&periodic_timer));
