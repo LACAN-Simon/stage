@@ -176,6 +176,8 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);
+    re = "lancement";
+    printf("%s/n",re);
     for (i=0; i<NB_PACKETS; i++) { 
 	int16_t t = 0 ;
 	uint8_t res = lps331ap_read_temp(&t);
