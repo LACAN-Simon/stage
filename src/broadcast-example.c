@@ -82,7 +82,12 @@ receiver(struct simple_udp_connection *c,
          data);
 }
 
-
+static void config_t(){
+	temperature_sensor.configure(SENSOR_ACTIVATE, 1);}
+static float temp(){
+	int t  = temperature_sensor.values(0);
+	return float(t);}
+	
 static void config_pressure()
 {
   pressure_sensor.configure(PRESSURE_SENSOR_DATARATE, LPS331AP_P_12_5HZ_T_1HZ);
@@ -187,9 +192,8 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	config_light();
 	float l = process_light();
 	float p = process_pressure();
-        int temp_val = temperature_sensor->value(TEMPERATURE_SENSOR_TYPE_TEMP);
 
-        float temperature = (temp_val / 10.0f);
+        float temperature = temp();
 	//snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f",i+id,l,p);
 	snprintf(send_buffer, sizeof(uint32_t)*30, "T=%.1f",temperature);
 
