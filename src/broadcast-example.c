@@ -85,6 +85,7 @@ static void config_t(){
 	int configValue = 1; // Valeur de configuration spécifique
 
 	int result = temperature_sensor.configure(type, configValue);
+	SENSORS_ACTIVATE(temperature_sensor);
 }
 
 static float temp(){
