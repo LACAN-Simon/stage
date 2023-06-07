@@ -84,9 +84,10 @@ receiver(struct simple_udp_connection *c,
 
 static void config_t(){
 	temperature_sensor.configure(SENSOR_ACTIVATE, 1);}
+
 static float temp(){
-	int t  = temperature_sensor.values(0);
-	return float(t);}
+	int t  = temperature_sensor.value(0);
+	return (float)t;  }
 	
 static void config_pressure()
 {
@@ -190,6 +191,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	
 	config_pressure();
 	config_light();
+	config_t() ;
 	float l = process_light();
 	float p = process_pressure();
 
