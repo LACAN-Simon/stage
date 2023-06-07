@@ -145,6 +145,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   uint32_t id;
   char *eptr;
   int i;
+  int cmp=0 ;
   PROCESS_BEGIN();
 
   simple_udp_register(&broadcast_connection, UDP_PORT,
@@ -187,13 +188,13 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	float l = process_light();
 	float p = process_pressure();
 	    
-	snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%d,L=%.2f;P=%.2f",i,l,p);
-	printf("Buffer=%s\n", send_buffer);  
+	snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%d,L=%.2f;P=%.2f",cmp,l,p);
+	printf("Send=%s\n", send_buffer);  
 	
 	uip_create_linklocal_allnodes_mcast(&addr);
 	
 	simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;
-
+        cmp = cmp + 1;
     } 
 
   }
