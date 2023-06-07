@@ -57,7 +57,7 @@
 #define SEND_TIME		(random_rand() % (SEND_INTERVAL))
 
 static struct simple_udp_connection broadcast_connection;
-
+extern const struct sensors_sensor temperature_sensor;
 // *Really* minimal PCG32 code / (c) 2014 M.E. O'Neill / pcg-random.org
 // Licensed under Apache License 2.0 (NO WARRANTY, etc. see website)
 typedef struct { uint64_t state;  uint64_t inc; } pcg32_random_t;
@@ -85,7 +85,6 @@ static void config_t(){
 	int configValue = 1; // Valeur de configuration spécifique
 
 	int result = temperature_sensor.configure(type, configValue);
-	SENSORS_ACTIVATE(temperature_sensor);
 }
 
 static float temp(){
