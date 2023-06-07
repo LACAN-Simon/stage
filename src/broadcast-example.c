@@ -259,10 +259,10 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;
 		tab[2]=t;
 	}
-    int k = 0;
+    /*int k = 0;
     for (k = 0; k < 3; i++) {
         printf("%f ", tab[k]);
-    }
+    }*/
     } 
 
   }
