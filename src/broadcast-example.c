@@ -41,7 +41,6 @@
 #include "simple-udp.h"
 #include "dev/pressure-sensor.h"
 #include "dev/light-sensor.h"
-#include "periph/lps331ap.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -78,17 +77,6 @@ receiver(struct simple_udp_connection *c,
   printf("Received;%s\n",
          data);
 }
-
-/*static void config_t(){
-	int type = SENSORS_ACTIVE; // Type de configuration (activé ou désactivé)
-	int configValue = 1; // Valeur de configuration spécifique
-
-	int result = temperature_sensor.configure(type, configValue);
-}*/
-
-static float temp(){
-	int t  = temperature_sensor.value(0);
-	return (float)t;  }
 	
 static void config_pressure()
 {
@@ -192,13 +180,11 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	
 	config_pressure();
 	config_light();
-	config_t() ;
 	float l = process_light();
 	float p = process_pressure();
 
         float temperature = temp();
-	//snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f",i+id,l,p);
-	snprintf(send_buffer, sizeof(uint32_t)*30, "T=%.1f",temperature);
+	snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f",i+id,l,p);
 
 	printf("Send=%s\n", send_buffer);  
 	
