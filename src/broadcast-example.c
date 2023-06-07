@@ -185,7 +185,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	float l = process_light();
 	float p = process_pressure();
 
-	snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f;T=%f",i+id,l,p,temp);
+	snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f;T=%.1f",i+id,l,p,temp);
 	
 	printf("Send=%s\n", send_buffer);  
 	
