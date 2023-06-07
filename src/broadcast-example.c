@@ -41,8 +41,7 @@
 #include "simple-udp.h"
 #include "dev/pressure-sensor.h"
 #include "dev/light-sensor.h"
-#include "dev/temperature-sensor.h"
-#include "dev/sky-sensors.h"
+#include "periph/lps331ap.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -80,12 +79,12 @@ receiver(struct simple_udp_connection *c,
          data);
 }
 
-static void config_t(){
+/*static void config_t(){
 	int type = SENSORS_ACTIVE; // Type de configuration (activé ou désactivé)
 	int configValue = 1; // Valeur de configuration spécifique
 
 	int result = temperature_sensor.configure(type, configValue);
-}
+}*/
 
 static float temp(){
 	int t  = temperature_sensor.value(0);
