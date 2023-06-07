@@ -177,15 +177,15 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);
     for (i=0; i<NB_PACKETS; i++) { 
-	uint16_t *t = 0 ;
+	int16_t *t = 0 ;
 	uint8_t res = lps331ap_read_temp(&t);
 	config_pressure();
 	config_light();
 	float l = process_light();
 	float p = process_pressure();
 
-	snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f",i+id,l,p);
-
+	snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f;T=%",i+id,l,p,t);
+	
 	printf("Send=%s\n", send_buffer);  
 	
 	uip_create_linklocal_allnodes_mcast(&addr);
