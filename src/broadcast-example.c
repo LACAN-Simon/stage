@@ -142,6 +142,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   uint32_t id;
   char *eptr;
   int i;
+  int a = rand() % 101;
   PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
@@ -166,7 +167,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   pcg32_srandom_r(&rng, initstate, initseq);
 
   etimer_set(&periodic_timer, SEND_INTERVAL);
-  printf("début\n");
+  printf("début avec :%d \n",a);
   while(1) {
 
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&periodic_timer));
