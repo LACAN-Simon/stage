@@ -146,6 +146,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   uip_ipaddr_t addr;
   uint32_t id;
   char *eptr;
+  int compteur = 0;
   int i;
   int a = rand() % 101;
   float tab[3];
@@ -187,7 +188,8 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);
-    printf("lancement\n");
+    printf("lancement numéro %d\n", compteur);
+    compteur ++ ;
     for (i=0; i<NB_PACKETS; i++) { 
 	int16_t temp = 0 ;
 	uint8_t res = lps331ap_read_temp(&temp);
@@ -257,6 +259,9 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;
 		tab[2]=t;
 	}
+    for (int k = 0; k < 3; i++) {
+        printf("%d ", tab[k]);
+    }
     } 
 
   }
