@@ -183,7 +183,6 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	float l = process_light();
 	float p = process_pressure();
 
-        float temperature = temp();
 	snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f",i+id,l,p);
 
 	printf("Send=%s\n", send_buffer);  
