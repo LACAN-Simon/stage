@@ -47,13 +47,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <inttypes.h>
-
+//#define SENSORS_ACTIVATE 1
 #define UDP_PORT 1234
 #define SEND_BUFFER_SIZE 1000
 #define BEGIN_INTERVAL_SECONDS 10 
 #define BEGIN_INTERVAL  (BEGIN_INTERVAL_SECONDS * CLOCK_SECOND)
 #define NB_PACKETS 5
-
 #define SEND_INTERVAL_SECONDS 6
 #define SEND_INTERVAL		(SEND_INTERVAL_SECONDS * CLOCK_SECOND)
 #define SEND_TIME		(random_rand() % (SEND_INTERVAL))
@@ -83,9 +82,8 @@ receiver(struct simple_udp_connection *c,
 }
 
 static void config_t(){
-	int k = 1 ;
-	int s = SENSOR_ACTIVATE ;
-	temperature_sensor.configure(s,k);}
+	int k = 1;
+	temperature_sensor.configure(SENSORS_ACTIVATE,k);}
 
 static float temp(){
 	int t  = temperature_sensor.value(0);
