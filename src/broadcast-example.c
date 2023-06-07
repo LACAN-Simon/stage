@@ -145,9 +145,8 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   uint32_t id;
   char *eptr;
   int i;
-  int cmp=0 ;
   PROCESS_BEGIN();
-
+  SENSORS_ACTIVATE(lps331ap_sensor);
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
                       receiver);
@@ -182,19 +181,21 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);
     for (i=0; i<NB_PACKETS; i++) { 
-
+	
 	config_pressure();
 	config_light();
 	float l = process_light();
 	float p = process_pressure();
-	    
-	snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%d,L=%.2f;P=%.2f",cmp,l,p);
+	int16_t temp_val = lps331ap_sensor.value(LPS331AP_SENSOR_TEMP);
+	float t = (temp_val / 10.0f);
+	//snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f",i+id,l,p);
+	snprintf(send_buffer, sizeof(uint32_t)*30, "T=%.1f",t);
+
 	printf("Send=%s\n", send_buffer);  
 	
 	uip_create_linklocal_allnodes_mcast(&addr);
 	
 	simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;
-        cmp = cmp + 1;
     } 
 
   }
