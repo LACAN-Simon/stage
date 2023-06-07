@@ -40,9 +40,9 @@
 #include "lps331ap.h"
 #include "simple-udp.h"
 #include "dev/pressure-sensor.h"
-#include "dev/lps331ap-sensor.h"
 #include "dev/light-sensor.h"
 #include "dev/temperature-sensor.h"
+#include "dev/sky-sensors.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -59,6 +59,8 @@
 #define SEND_TIME		(random_rand() % (SEND_INTERVAL))
 
 static struct simple_udp_connection broadcast_connection;
+const struct sensors_sensor *temperature_sensor;
+
 // *Really* minimal PCG32 code / (c) 2014 M.E. O'Neill / pcg-random.org
 // Licensed under Apache License 2.0 (NO WARRANTY, etc. see website)
 typedef struct { uint64_t state;  uint64_t inc; } pcg32_random_t;
@@ -147,7 +149,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   char *eptr;
   int i;
   PROCESS_BEGIN();
-  SENSORS_ACTIVATE(lps331ap_sensor);
+  temperature_sensor = sensors_find(TEMPERATURE_SENSOR);
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
                       receiver);
@@ -187,10 +189,11 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	config_light();
 	float l = process_light();
 	float p = process_pressure();
-	int16_t temp_val = lps331ap_sensor.value(LPS331AP_SENSOR_TEMP);
-	float t = (temp_val / 10.0f);
+        int temp_val = temperature_sensor->value(TEMPERATURE_SENSOR_TYPE_TEMP);
+
+        float temperature = (temp_val / 10.0f);
 	//snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f",i+id,l,p);
-	snprintf(send_buffer, sizeof(uint32_t)*30, "T=%.1f",t);
+	snprintf(send_buffer, sizeof(uint32_t)*30, "T=%.1f",temperature);
 
 	printf("Send=%s\n", send_buffer);  
 	
