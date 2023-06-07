@@ -179,12 +179,13 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     for (i=0; i<NB_PACKETS; i++) { 
 	int16_t t = 0 ;
 	uint8_t res = lps331ap_read_temp(&t);
+	float temp = 42.5 - t / 480 ;
 	config_pressure();
 	config_light();
 	float l = process_light();
 	float p = process_pressure();
 
-	snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f;T=%d",i+id,l,p,t);
+	snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f;T=%f",i+id,l,p,temp);
 	
 	printf("Send=%s\n", send_buffer);  
 	
