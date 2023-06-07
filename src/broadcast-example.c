@@ -77,7 +77,12 @@ receiver(struct simple_udp_connection *c,
   printf("Received;%s\n",
          data);
 }
-	
+
+static int abs(float a, float b){
+	if (abs(a-b)>1)
+		{return 1;}
+	return 0 ; }
+
 static void config_pressure()
 {
   pressure_sensor.configure(PRESSURE_SENSOR_DATARATE, LPS331AP_P_12_5HZ_T_1HZ);
@@ -143,6 +148,10 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   char *eptr;
   int i;
   int a = rand() % 101;
+  float tab[3];
+  tab[0]=0.0;
+  tab[1]=0.0;
+  tab[2]=0.0;
   PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
@@ -180,25 +189,59 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     id = pcg32_random_r(&rng);
     printf("lancement\n");
     for (i=0; i<NB_PACKETS; i++) { 
-	int16_t t = 0 ;
-	uint8_t res = lps331ap_read_temp(&t);
-	float temp = 42.5 + t / 480 ;
+	int16_t temp = 0 ;
+	uint8_t res = lps331ap_read_temp(&temp);
+	float t = 42.5 + t / 480 ;
 	config_pressure();
 	config_light();
 	float l = process_light();
 	float p = process_pressure();
-
-	snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f;T=%.1f",i+id,l,p,temp);
-	
-	printf("Send=%s\n", send_buffer);  
-	
-	uip_create_linklocal_allnodes_mcast(&addr);
-	
-	simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;
+	    
+	if (abs(l,tab[0])==1 && abs(p,tab[1])==1 && abs(t,tab[2])==1){
+		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f;T=%.1f",i+id,l,p,t);
+		printf("Send=%s\n", send_buffer);  
+		uip_create_linklocal_allnodes_mcast(&addr);
+		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;}
+	    
+	if (abs(l,tab[0])==0 && abs(p,tab[1])==1 && abs(t,tab[2])==1){
+		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx;P=%.2f;T=%.1f",i+id,p,t);
+		printf("Send=%s\n", send_buffer);  
+		uip_create_linklocal_allnodes_mcast(&addr);
+		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;}
+	   
+	if (abs(l,tab[0])==1 && abs(p,tab[1])==0 && abs(t,tab[2])==1){
+		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;T=%.1f",i+id,l,t);
+		printf("Send=%s\n", send_buffer);  
+		uip_create_linklocal_allnodes_mcast(&addr);
+		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;}
+	  
+	if (abs(l,tab[0])==1 && abs(p,tab[1])==1 && abs(t,tab[2])==0){
+		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f",i+id,l,p);
+		printf("Send=%s\n", send_buffer);  
+		uip_create_linklocal_allnodes_mcast(&addr);
+		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;}
+	    
+	if (abs(l,tab[0])==1 && abs(p,tab[1])==0 && abs(t,tab[2])==0){
+		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f",i+id,l);
+		printf("Send=%s\n", send_buffer);  
+		uip_create_linklocal_allnodes_mcast(&addr);
+		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;}
+	    
+	if (abs(l,tab[0])==0 && abs(p,tab[1])==1 && abs(t,tab[2])==0){
+		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,P=%.2f",i+id,p);
+		printf("Send=%s\n", send_buffer);  
+		uip_create_linklocal_allnodes_mcast(&addr);
+		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;}
+	    
+	if (abs(l,tab[0])==0 && abs(p,tab[1])==0 && abs(t,tab[2])==1){
+		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,T=%.1f",i+id,t);
+		printf("Send=%s\n", send_buffer);  
+		uip_create_linklocal_allnodes_mcast(&addr);
+		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;}
     } 
 
   }
-
+	
   PROCESS_END();
 }
 /*---------------------------------------------------------------------------*/
