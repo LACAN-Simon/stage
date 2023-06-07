@@ -47,7 +47,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <inttypes.h>
-//#define SENSORS_ACTIVATE 1
+#define SENSORS_ACTIVATE 1
 #define UDP_PORT 1234
 #define SEND_BUFFER_SIZE 1000
 #define BEGIN_INTERVAL_SECONDS 10 
