@@ -40,6 +40,7 @@
 #include "lps331ap.h"
 #include "simple-udp.h"
 #include "dev/pressure-sensor.h"
+#include "dev/lps331ap-sensor.h"
 #include "dev/light-sensor.h"
 #include "dev/temperature-sensor.h"
 #include <stdio.h>
