@@ -83,7 +83,7 @@ receiver(struct simple_udp_connection *c,
 }
 
 static void config_t(){
-	temperature_sensor.configure(SENSOR_ACTIVATE, 1);}
+	temperature_sensor.configure(int SENSOR_ACTIVATE,int 1);}
 
 static float temp(){
 	int t  = temperature_sensor.value(0);
