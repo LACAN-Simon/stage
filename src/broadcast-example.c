@@ -47,7 +47,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <inttypes.h>
-#define SENSORS_ACTIVATE 1
 #define UDP_PORT 1234
 #define SEND_BUFFER_SIZE 1000
 #define BEGIN_INTERVAL_SECONDS 10 
@@ -82,8 +81,11 @@ receiver(struct simple_udp_connection *c,
 }
 
 static void config_t(){
-	int k = 1;
-	temperature_sensor.configure(SENSORS_ACTIVATE,k);}
+	int type = SENSORS_ACTIVE; // Type de configuration (activé ou désactivé)
+	int configValue = 1; // Valeur de configuration spécifique
+
+	int result = temperature_sensor.configure(type, configValue);
+}
 
 static float temp(){
 	int t  = temperature_sensor.value(0);
