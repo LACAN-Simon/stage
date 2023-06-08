@@ -142,6 +142,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   uint32_t id;
   char *eptr;
   int i;
+  int16_t t = 0 ;
   PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
@@ -179,8 +180,8 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     id = pcg32_random_r(&rng);
     printf("lancement\n");
     for (i=0; i<NB_PACKETS; i++) { 
-	int16_t t = 0 ;
 	uint8_t res = lps331ap_read_temp(&t);
+	printf("res=%u",res);
 	float temp = 42.5 + t / 480 ;
 	config_pressure();
 	config_light();
