@@ -153,10 +153,6 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   int compteur = 0;
   int i;
   int a = rand() % 101;
-  float tab[3];
-  tab[0]=0.0;
-  tab[1]=0.0;
-  tab[2]=0.0;
   int u = 1;
   PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
@@ -182,6 +178,10 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   pcg32_srandom_r(&rng, initstate, initseq);
 
   etimer_set(&periodic_timer, SEND_INTERVAL);
+  float tab[3];
+  tab[0]=0.0;
+  tab[1]=0.0;
+  tab[2]=0.0;
   printf("début avec :%d \n",a);
   while(1) {
 
@@ -198,7 +198,8 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     for (i=0; i<NB_PACKETS; i++) { 
 	int16_t temp = 0 ;
 	uint8_t res = lps331ap_read_temp(&temp);
-	float t = 42.5 + temp / 480 ;
+// 	float t = 42.5 + temp / 480 ;
+	float t = (float)temp ;
 	config_pressure();
 	config_light();
 	float l = process_light();
