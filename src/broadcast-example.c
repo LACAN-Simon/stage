@@ -193,7 +193,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);
-    printf("lancement\n");
+//     printf("lancement\n");
     
     for (i=0; i<NB_PACKETS; i++) { 
 	int16_t temp = 0 ;
@@ -203,10 +203,10 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	config_light();
 	float l = process_light();
 	float p = process_pressure();
-	int k = 0;
-        for (k = 0; k < 3; k++) {
-         		 printf("%f ", tab[k]);}
-	printf("\n");
+// 	int k = 0;
+//         for (k = 0; k < 3; k++) {
+//          		 printf("%f ", tab[k]);}
+// 	printf("\n");
 	    
 	if (tabs(l,tab[0])>u && tabs(p,tab[1])>u && tabs(t,tab[2])>u){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f;T=%.1f",i+id,l,p,t);
@@ -216,7 +216,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		tab[0]=l;
 		tab[1]=p;
 		tab[2]=t;
- 		printf("cas 1\n");
+ 		//printf("cas 1\n");
 	}
 	    
 	else if (tabs(l,tab[0])<u && tabs(p,tab[1])>u && tabs(t,tab[2])>u){
