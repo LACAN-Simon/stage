@@ -188,7 +188,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);
-    printf("lancement numéro %d\n", compteur);
+    printf("lancement numéro\n");
     
     for (i=0; i<NB_PACKETS; i++) { 
 	int16_t temp = 0 ;
@@ -209,7 +209,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		tab[2]=t;
 	}
 	    
-	if (tabs(l,tab[0])==0 && tabs(p,tab[1])==1 && tabs(t,tab[2])==1){
+	else if (tabs(l,tab[0])==0 && tabs(p,tab[1])==1 && tabs(t,tab[2])==1){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx;P=%.2f;T=%.1f",i+id,p,t);
 		printf("Send=%s\n", send_buffer);  
 		uip_create_linklocal_allnodes_mcast(&addr);
@@ -218,7 +218,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		tab[2]=t;		
 	}
 	   
-	if (tabs(l,tab[0])==1 && tabs(p,tab[1])==0 && tabs(t,tab[2])==1){
+	else if (tabs(l,tab[0])==1 && tabs(p,tab[1])==0 && tabs(t,tab[2])==1){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;T=%.1f",i+id,l,t);
 		printf("Send=%s\n", send_buffer);  
 		uip_create_linklocal_allnodes_mcast(&addr);
@@ -227,7 +227,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		tab[2]=t;
 	}
 	  
-	if (tabs(l,tab[0])==1 && tabs(p,tab[1])==1 && tabs(t,tab[2])==0){
+	else if (tabs(l,tab[0])==1 && tabs(p,tab[1])==1 && tabs(t,tab[2])==0){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f",i+id,l,p);
 		printf("Send=%s\n", send_buffer);  
 		uip_create_linklocal_allnodes_mcast(&addr);
@@ -236,7 +236,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		tab[1]=p;
 	}
 	    
-	if (tabs(l,tab[0])==1 && tabs(p,tab[1])==0 && tabs(t,tab[2])==0){
+	else if (tabs(l,tab[0])==1 && tabs(p,tab[1])==0 && tabs(t,tab[2])==0){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f",i+id,l);
 		printf("Send=%s\n", send_buffer);  
 		uip_create_linklocal_allnodes_mcast(&addr);
@@ -244,7 +244,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		tab[0]=l;
 	}
 	    
-	if (tabs(l,tab[0])==0 && tabs(p,tab[1])==1 && tabs(t,tab[2])==0){
+	else if (tabs(l,tab[0])==0 && tabs(p,tab[1])==1 && tabs(t,tab[2])==0){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,P=%.2f",i+id,p);
 		printf("Send=%s\n", send_buffer);  
 		uip_create_linklocal_allnodes_mcast(&addr);
@@ -252,7 +252,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		tab[1]=p;
 	}
 	    
-	if (tabs(l,tab[0])==0 && tabs(p,tab[1])==0 && tabs(t,tab[2])==1){
+	else if (tabs(l,tab[0])==0 && tabs(p,tab[1])==0 && tabs(t,tab[2])==1){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,T=%.1f",i+id,t);
 		printf("Send=%s\n", send_buffer);  
 		uip_create_linklocal_allnodes_mcast(&addr);
@@ -265,7 +265,6 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	printf("\n");
     
     } 
-    compteur = compteur + 1 ; 
   }
 	
   PROCESS_END();
