@@ -181,7 +181,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     printf("lancement\n");
     for (i=0; i<NB_PACKETS; i++) { 
 	uint8_t res = lps331ap_read_temp(&t);
-	printf("res=%u",res);
+	printf("res=%u\n",res);
 	float temp = 42.5 + t / 480 ;
 	config_pressure();
 	config_light();
