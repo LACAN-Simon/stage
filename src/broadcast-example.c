@@ -74,8 +74,8 @@ receiver(struct simple_udp_connection *c,
          const uint8_t *data,
          uint16_t datalen)
 {
-  printf("Received;%s\n",
-         data);
+  /*printf("Received;%s\n",
+         data);*/
 }
 
 static int tabs(float a, float b){
@@ -189,7 +189,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);
     printf("lancement numéro %d\n", compteur);
-    compteur = compteur + 1 ;
+    
     for (i=0; i<NB_PACKETS; i++) { 
 	int16_t temp = 0 ;
 	uint8_t res = lps331ap_read_temp(&temp);
@@ -261,10 +261,11 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	}
         int k = 0;
         for (k = 0; k < 3; k++) {
-          printf("%f ", tab[k]);
-    }
+          printf("%f ", tab[k]);}
+	print("\n")
+    
     } 
-
+    compteur = compteur + 1 ; 
   }
 	
   PROCESS_END();
