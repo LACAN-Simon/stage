@@ -178,7 +178,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     id = pcg32_random_r(&rng);
     printf("lancement\n");
     for (i=0; i<NB_PACKETS; i++) { 
-	int16_t w;
+	int16_t w = 1000000;
         uint8_t res = lps331ap_read_temp(&w);
 	printf("res=%u\n",res);
 	//float temp = 42.5 + t / 480 ;
