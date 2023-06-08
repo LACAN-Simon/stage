@@ -39,8 +39,8 @@
 #include "net/ipv6/uip-ds6.h"
 #include "lps331ap.h"
 #include "simple-udp.h"
-#include "dev/pressure-sensor.h"
 #include "dev/light-sensor.h"
+#include "dev/pressure-sensor.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -55,7 +55,6 @@
 #define SEND_TIME		(random_rand() % (SEND_INTERVAL))
 
 static struct simple_udp_connection broadcast_connection;
-extern const struct sensors_sensor temperature_sensor;
 // *Really* minimal PCG32 code / (c) 2014 M.E. O'Neill / pcg-random.org
 // Licensed under Apache License 2.0 (NO WARRANTY, etc. see website)
 typedef struct { uint64_t state;  uint64_t inc; } pcg32_random_t;
@@ -142,7 +141,6 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   uint32_t id;
   char *eptr;
   int i;
-  int16_t t;
   PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
@@ -180,7 +178,8 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     id = pcg32_random_r(&rng);
     printf("lancement\n");
     for (i=0; i<NB_PACKETS; i++) { 
-	uint8_t res = lps331ap_read_temp(&t);
+	int16_t w;
+        uint8_t res = lps331ap_read_temp(&w);
 	printf("res=%u\n",res);
 	//float temp = 42.5 + t / 480 ;
 	config_pressure();
@@ -188,7 +187,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	float l = process_light();
 	float p = process_pressure();
 
-	snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,T=%.1f",i+id,(float)t);
+	snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,T=%.1f",i+id,(float)w);
 	
 	printf("Send=%s\n", send_buffer);  
 	
