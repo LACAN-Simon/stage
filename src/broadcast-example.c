@@ -260,7 +260,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		tab[2]=t;
 	}
         int k = 0;
-        for (k = 0; k < 3; i++) {
+        for (k = 0; k < 3; k++) {
           printf("%f ", tab[k]);
     }
     } 
