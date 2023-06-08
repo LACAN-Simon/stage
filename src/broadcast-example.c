@@ -64,6 +64,10 @@ typedef struct { uint64_t state;  uint64_t inc; } pcg32_random_t;
 /*---------------------------------------------------------------------------*/
 PROCESS(broadcast_example_process, "UDP broadcast example process");
 AUTOSTART_PROCESSES(&broadcast_example_process);
+ float tab[3];
+ tab[0]=0.0;
+ tab[1]=0.0;
+ tab[2]=0.0;
 /*---------------------------------------------------------------------------*/
 static void
 receiver(struct simple_udp_connection *c,
@@ -178,10 +182,6 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   pcg32_srandom_r(&rng, initstate, initseq);
 
   etimer_set(&periodic_timer, SEND_INTERVAL);
-  float tab[3];
-  tab[0]=0.0;
-  tab[1]=0.0;
-  tab[2]=0.0;
   printf("début avec :%d \n",a);
   while(1) {
 
@@ -198,8 +198,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     for (i=0; i<NB_PACKETS; i++) { 
 	int16_t temp = 0 ;
 	uint8_t res = lps331ap_read_temp(&temp);
-// 	float t = 42.5 + temp / 480 ;
-	float t = (float)temp ;
+        float t = 42.5 + temp / 480 ;
 	config_pressure();
 	config_light();
 	float l = process_light();
