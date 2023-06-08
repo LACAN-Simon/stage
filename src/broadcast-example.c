@@ -262,7 +262,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
         int k = 0;
         for (k = 0; k < 3; k++) {
           printf("%f ", tab[k]);}
-	print("\n");
+	printf("\n");
     
     } 
     compteur = compteur + 1 ; 
