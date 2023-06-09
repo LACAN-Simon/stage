@@ -14,7 +14,7 @@ fi
 LOGIN="lacan"
 SITE="lille"
 LU=",m3,"  
-L = "$SITE$LU$5"
+L="$SITE$LU$5"
 IOTLAB="$LOGIN@$SITE.iot-lab.info"
 CODEDIR="${HOME}/path/to/iot-lab/parts/contiki/examples/ipv6/simple-udp-rpl"
 EXPDIR="${HOME}/stage"
