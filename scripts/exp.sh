@@ -5,7 +5,7 @@ set -e
 
 #---------------------- TEST ARGUMENTS ----------------------#
 if [ "$#" -ne 5 ]; then
-	echo "Usage: $0 <exp name> <interval (s)> <exp duration (m)> <packets per seconds> <list of nodes>"
+	echo "Usage: $0 <exp name> <exp duration (m)> <interval (s)> <packets per seconds> <list of nodes>"
 	exit
 fi  
 #---------------------- TEST ARGUMENTS ----------------------#
@@ -31,7 +31,7 @@ function ctrl_c() {
 #----------------------- CATCH SIGINT -----------------------#
 
 #-------------------- CONFIGURE FIRMWARE --------------------#
-sed -i "s/#define\ SEND_INTERVAL_SECONDS\ .*/#define\ SEND_INTERVAL_SECONDS\ $2/g" $CODEDIR/broadcast-example.c
+sed -i "s/#define\ SEND_INTERVAL_SECONDS\ .*/#define\ SEND_INTERVAL_SECONDS\ $3/g" $CODEDIR/broadcast-example.c
 sed -i "s/#define\ NB_PACKETS\ .*/#define\ NB_PACKETS\ $4/g" $CODEDIR/broadcast-example.c
 #-------------------- CONFIGURE FIRMWARE --------------------#
 
@@ -44,7 +44,7 @@ make TARGET=iotlab-m3 -j8 || { echo "Compilation failed."; exit 1; }
 cd $EXPDIR/scripts
 
 # Launch the experiment and obtain its ID
-EXPID=$(iotlab-experiment submit -n $1 -d $3 -l $L | grep id | cut -d' ' -f6)
+EXPID=$(iotlab-experiment submit -n $1 -d $2 -l $L | grep id | cut -d' ' -f6)
 # Wait for the experiment to began
 iotlab-experiment wait -i $EXPID
 # Flash nodes
