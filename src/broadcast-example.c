@@ -66,9 +66,8 @@ typedef struct { uint64_t state;  uint64_t inc; } pcg32_random_t;
 PROCESS(broadcast_example_process, "UDP broadcast example process");
 AUTOSTART_PROCESSES(&broadcast_example_process);
  float tab[3];
- time_t start_time, current_time;
  int e;
- start_time = time(NULL);
+ time_t start_time = time(NULL);
 /*---------------------------------------------------------------------------*/
 static void
 receiver(struct simple_udp_connection *c,
@@ -198,6 +197,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	config_light();
 	float l = process_light();
 	float p = process_pressure();
+	time_t current_time = time(NULL);
 	e = difftime(current_time, start_time);   
 	if (tabs(l,tab[0])>u && tabs(p,tab[1])>u && tabs(t,tab[2])>u){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "Time=%d, ID:%lx,L=%.2f;P=%.2f;T=%.1f",e,i+id,l,p,t);
