@@ -43,7 +43,7 @@
 #include "dev/light-sensor.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <time>
+#include <time.h>
 #include <string.h>
 #include <inttypes.h>
 #define UDP_PORT 1234
