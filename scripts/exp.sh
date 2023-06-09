@@ -4,7 +4,7 @@
 set -e
 
 #---------------------- TEST ARGUMENTS ----------------------#
-if [ "$#" -ne 6 ]; then
+if [ "$#" -ne 5 ]; then
 	echo "Usage: $0 <exp name> <interval (s)> <exp duration (m)> <packets per seconds> <list of nodes>"
 	exit
 fi  
