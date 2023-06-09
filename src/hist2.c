@@ -64,6 +64,10 @@ typedef struct { uint64_t state;  uint64_t inc; } pcg32_random_t;
 /*---------------------------------------------------------------------------*/
 PROCESS(broadcast_example_process, "UDP broadcast example process");
 AUTOSTART_PROCESSES(&broadcast_example_process);
+ float tab[3];
+//  tab[0]=0.0;
+//  tab[1]=0.0;
+//  tab[2]=0.0;
 /*---------------------------------------------------------------------------*/
 static void
 receiver(struct simple_udp_connection *c,
@@ -74,8 +78,8 @@ receiver(struct simple_udp_connection *c,
          const uint8_t *data,
          uint16_t datalen)
 {
-  /*printf("Received;%s\n",
-         data);*/
+  printf("Received;%s\n",
+         data);
 }
 
 static int tabs(float a, float b) {
@@ -178,10 +182,6 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   pcg32_srandom_r(&rng, initstate, initseq);
 
   etimer_set(&periodic_timer, SEND_INTERVAL);
-  float tab[3];
-  tab[0]=0.0;
-  tab[1]=0.0;
-  tab[2]=0.0;
   printf("début avec :%d \n",a);
   while(1) {
 
@@ -193,21 +193,20 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);
-    printf("lancement\n");
+//     printf("lancement\n");
     
     for (i=0; i<NB_PACKETS; i++) { 
 	int16_t temp = 0 ;
 	uint8_t res = lps331ap_read_temp(&temp);
-// 	float t = 42.5 + temp / 480 ;
-	float t = (float)temp ;
+        float t = 42.5 + temp / 480 ;
 	config_pressure();
 	config_light();
 	float l = process_light();
 	float p = process_pressure();
-	int k = 0;
-        for (k = 0; k < 3; k++) {
-         		 printf("%f ", tab[k]);}
-	printf("\n");
+// 	int k = 0;
+//         for (k = 0; k < 3; k++) {
+//          		 printf("%f ", tab[k]);}
+// 	printf("\n");
 	    
 	if (tabs(l,tab[0])>u && tabs(p,tab[1])>u && tabs(t,tab[2])>u){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f;T=%.1f",i+id,l,p,t);
@@ -217,7 +216,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		tab[0]=l;
 		tab[1]=p;
 		tab[2]=t;
- 		printf("cas 1\n");
+ 		//printf("cas 1\n");
 	}
 	    
 	else if (tabs(l,tab[0])<u && tabs(p,tab[1])>u && tabs(t,tab[2])>u){
