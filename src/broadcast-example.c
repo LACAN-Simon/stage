@@ -46,7 +46,7 @@
 #include <string.h>
 #include <inttypes.h>
 #define UDP_PORT 1234
-#define SEND_BUFFER_SIZE 1000
+#define SEND_BUFFER_SIZE 30 
 #define BEGIN_INTERVAL_SECONDS 10 
 #define BEGIN_INTERVAL  (BEGIN_INTERVAL_SECONDS * CLOCK_SECOND)
 #define NB_PACKETS 5
@@ -78,8 +78,8 @@ receiver(struct simple_udp_connection *c,
          const uint8_t *data,
          uint16_t datalen)
 {
-  /*printf("Received;%s\n",
-         data);*/
+  printf("Received;%s\n",
+         data);
 }
 
 static int tabs(float a, float b) {
