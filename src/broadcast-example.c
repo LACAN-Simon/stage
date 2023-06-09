@@ -66,8 +66,6 @@ typedef struct { uint64_t state;  uint64_t inc; } pcg32_random_t;
 PROCESS(broadcast_example_process, "UDP broadcast example process");
 AUTOSTART_PROCESSES(&broadcast_example_process);
  float tab[3];
- int e;
- time_t start_time = time(NULL);
 /*---------------------------------------------------------------------------*/
 static void
 receiver(struct simple_udp_connection *c,
