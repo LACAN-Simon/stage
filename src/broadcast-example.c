@@ -78,8 +78,8 @@ receiver(struct simple_udp_connection *c,
          const uint8_t *data,
          uint16_t datalen)
 {
-  /*printf("Received;%s\n",
-         data);*/
+  printf("Received;%s\n",
+         data);
 }
 
 static int tabs(float a, float b) {
