@@ -32,7 +32,7 @@ function ctrl_c() {
 
 #-------------------- CONFIGURE FIRMWARE --------------------#
 sed -i "s/#define\ SEND_INTERVAL_SECONDS\ .*/#define\ SEND_INTERVAL_SECONDS\ $2/g" $CODEDIR/broadcast-example.c
-sed -i "s/#define\ SEND_BUFFER_SIZE\ .*/#define\ SEND_BUFFER_SIZE\ $3/g" $CODEDIR/broadcast-example.c
+sed -i "s/#define\ NB_PACKETS\ .*/#define\ NB_PACKETS\ $4/g" $CODEDIR/broadcast-example.c
 #-------------------- CONFIGURE FIRMWARE --------------------#
 
 #--------------------- COMPILE FIRMWARE ---------------------#
@@ -44,7 +44,7 @@ make TARGET=iotlab-m3 -j8 || { echo "Compilation failed."; exit 1; }
 cd $EXPDIR/scripts
 
 # Launch the experiment and obtain its ID
-EXPID=$(iotlab-experiment submit -n $1 -d $4 -l $L | grep id | cut -d' ' -f6)
+EXPID=$(iotlab-experiment submit -n $1 -d $3 -l $L | grep id | cut -d' ' -f6)
 # Wait for the experiment to began
 iotlab-experiment wait -i $EXPID
 # Flash nodes
