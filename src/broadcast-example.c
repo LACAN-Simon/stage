@@ -54,6 +54,7 @@
 #define SEND_INTERVAL_SECONDS 6
 #define SEND_INTERVAL		(SEND_INTERVAL_SECONDS * CLOCK_SECOND)
 #define SEND_TIME		(random_rand() % (SEND_INTERVAL))
+#define RPL_DEFAULT_INSTANCE &rpl_instance_default
 
 static struct simple_udp_connection broadcast_connection;
 
