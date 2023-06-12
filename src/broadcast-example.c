@@ -54,9 +54,10 @@
 #define SEND_INTERVAL_SECONDS 6
 #define SEND_INTERVAL		(SEND_INTERVAL_SECONDS * CLOCK_SECOND)
 #define SEND_TIME		(random_rand() % (SEND_INTERVAL))
-#define RPL_DEFAULT_INSTANCE &rpl_instance_default
 
 static struct simple_udp_connection broadcast_connection;
+rpl_dag_t *dag = rpl_get_dag(RPL_DEFAULT_INSTANCE);
+#define RPL_DEFAULT_INSTANCE &rpl_instance_default
 
 extern const struct sensors_sensor temperature_sensor;
 // *Really* minimal PCG32 code / (c) 2014 M.E. O'Neill / pcg-random.org
@@ -156,7 +157,6 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   char *eptr;
   int i;
   int u = 1;
-  rpl_dag_t *dag = rpl_get_dag(RPL_DEFAULT_INSTANCE);
   PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
