@@ -49,7 +49,7 @@ EXPID=$(iotlab-experiment submit -n $1 -d $2 -l $L | grep id | cut -d' ' -f6)
 iotlab-experiment wait -i $EXPID
 # Flash nodes
 W="115+117"
-T=""$SITE$LU$W"
+T="$SITE$LU$W"
 iotlab-node --flash $CODEDIR/broadcast-example.iotlab-m3 -i $EXPID -l $T
 # Wait for contiki
 sleep 10
