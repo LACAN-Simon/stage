@@ -48,9 +48,9 @@ EXPID=$(iotlab-experiment submit -n $1 -d $2 -l $L | grep id | cut -d' ' -f6)
 # Wait for the experiment to began
 iotlab-experiment wait -i $EXPID
 # Flash nodes
-W="115+117"
-T="$SITE$LU$W"
-iotlab-node --flash $CODEDIR/broadcast-example.iotlab-m3 -i $EXPID -l $T
+#W="115+117"
+#T="$SITE$LU$W"
+iotlab-node --flash $CODEDIR/broadcast-example.iotlab-m3 -i $EXPID 
 # Wait for contiki
 sleep 10
 # Run a script for logging and seeding
