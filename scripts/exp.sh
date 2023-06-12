@@ -55,6 +55,7 @@ iotlab-node --flash $CODEDIR/broadcast-example.iotlab-m3 -i $EXPID -l $T
 sleep 10
 # Run a script for logging and seeding
 iotlab-experiment script -i $EXPID --run $SITE,script=serial_script.sh
+ip -6 route show 
 # Wait for experiment termination 
 iotlab-experiment wait -i $EXPID --state Terminated  
 #-------------------- LAUNCH EXPERIMENTS --------------------#
