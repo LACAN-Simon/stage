@@ -155,7 +155,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   char *eptr;
   int i;
   int u = 1;
-  rpl_dag_t *dag = rpl_get_dag(RPL_DEFAULT_INSTANCE);
+  rpl_dag_t *dag = rpl_get_dag((rpl_instance_t *)RPL_DEFAULT_INSTANCE);
   PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
