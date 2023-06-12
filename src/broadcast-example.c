@@ -41,6 +41,7 @@
 #include "simple-udp.h"
 #include "dev/pressure-sensor.h"
 #include "dev/light-sensor.h"
+#include "net//rpl/rpl.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -55,6 +56,7 @@
 #define SEND_TIME		(random_rand() % (SEND_INTERVAL))
 
 static struct simple_udp_connection broadcast_connection;
+
 extern const struct sensors_sensor temperature_sensor;
 // *Really* minimal PCG32 code / (c) 2014 M.E. O'Neill / pcg-random.org
 // Licensed under Apache License 2.0 (NO WARRANTY, etc. see website)
@@ -153,6 +155,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   char *eptr;
   int i;
   int u = 1;
+  rpl_dag_t *dag = rpl_get_dag(RPL_DEFAULT_INSTANCE);
   PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
@@ -187,7 +190,20 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);
-    
+    if (dag != NULL) {
+	    // Parcourir les entrées de la table de routage
+	    rpl_parent_t *parent;
+	    for (parent = list_head(dag->parents); parent != NULL; parent = list_item_next(parent)) {
+		// Accéder aux informations de routage
+		rpl_dag_node_t *node = parent->dag_node;
+		rpl_ipv6addr_t *ipaddr = &(node->addr);
+		// Faire quelque chose avec les informations de routage, par exemple les afficher
+		printf("Adresse: %s\n", rpl_ipv6_addr_str(ipaddr));
+	    }
+		} else {
+	    printf("Aucun DAG RPL n'est actuellement configuré.\n");
+		}
+
     for (i=0; i<NB_PACKETS; i++) { 
 	int16_t temp = 0 ;
 	uint8_t res = lps331ap_read_temp(&temp);
