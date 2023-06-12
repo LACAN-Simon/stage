@@ -156,7 +156,6 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   int i;
   int u = 1;
   rpl_dag_t *dag = rpl_get_any_dag();
-  rpl_parent_t *parent = dag->preferred_parent;
   PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
@@ -190,8 +189,21 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&send_timer));
 
     //id = nid * clock_seconds();
-    id = pcg32_random_r(&rng);
+    id = pcg32_random_r(&rng);    
+    if (dag != NULL) {
+        // Parcourir les parents dans le DAG
+        rpl_parent_t *parent = dag->preferred_parent;
+        while (parent != NULL) {
+            printf("Adresse IP du parent: ");
+            uip_debug_ipaddr_print(&parent->addr);
+            printf("\nRang du parent: %u\n", parent->rank);
 
+            // Passer au parent suivant dans la hiérarchie
+            parent = parent->next;
+        }
+    } else {
+        printf("Aucun DAG RPL actif dans le réseau.\n");
+    }
     for (i=0; i<NB_PACKETS; i++) { 
 	int16_t temp = 0 ;
 	uint8_t res = lps331ap_read_temp(&temp);
