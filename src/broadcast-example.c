@@ -194,12 +194,12 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
         // Parcourir les parents dans le DAG
         rpl_parent_t *parent = dag->preferred_parent;
         while (parent != NULL) {
-            printf("Adresse IP du parent: ");
-            uip_debug_ipaddr_print(&parent->addr);
+//             printf("Adresse IP du parent: ");
+//             uip_debug_ipaddr_print(&parent->addr);
             printf("\nRang du parent: %u\n", parent->rank);
-
+	    printf("dtsn:%u, flag:%u\n", parent->dtsn,parent->flags);
             // Passer au parent suivant dans la hiérarchie
-            parent = parent->next;
+            //parent = parent->next;
         }
     } else {
         printf("Aucun DAG RPL actif dans le réseau.\n");
