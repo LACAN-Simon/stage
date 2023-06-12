@@ -23,4 +23,3 @@ done
 sleep 1
 
 serial_aggregator -i ${EXP_ID} 2> /dev/null 1> ${OUTFILE}
-ip -6 route show 
