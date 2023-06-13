@@ -56,8 +56,6 @@ sleep 10
 # Run a script for logging and seeding
 iotlab-experiment script -i $EXPID --run $SITE,script=serial_script.sh
 # Wait for experiment termination 
-rpl info
-rpl routes
 iotlab-experiment wait -i $EXPID --state Terminated  
 #-------------------- LAUNCH EXPERIMENTS --------------------#
 
