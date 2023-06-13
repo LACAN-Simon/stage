@@ -39,7 +39,7 @@ PROCESS_THREAD(rpl_creation,ev,data)
 	  printf("DAG created\n");   }
 //   rpl_dag_t *dag = rpl_get_any_dag();
   if(dag != NULL && dag->preferred_parent != NULL) {
-  printf("Preferred parent IP address: %u\n", dag->preferred_parent->addr.u8[sizeof(dag->preferred_parent->addr.u8) - 1]);
+  printf("Preferred parent IP address: %u\n", dag->preferred_parent->flags);
 } else {
   printf("No preferred parent\n");
 }
