@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <inttypes.h>
+#define RPL_MOP_DEFAULT 0
 #define UDP_PORT 1234
 #define SEND_BUFFER_SIZE 1000
 #define BEGIN_INTERVAL_SECONDS 10 
@@ -135,7 +136,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   rpl_dag_t *dag;
   dag = rpl_set_root(RPL_DEFAULT_INSTANCE, &ipaddr);
   rpl_set_prefix(dag, &ipaddr, 64);
-  rpl_set_mode(dag, RPL_MODE_DEFAULT);
+  rpl_set_mode(dag, RPL_MOP_DEFAULT);
  
   PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
