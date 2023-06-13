@@ -127,6 +127,8 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   char *eptr;
   int i;
   int u = 1;
+  
+  PROCESS_BEGIN();
   if (cond==0){
 	  rpl_init(); 
 	  uip_ipaddr_t ipaddr;
@@ -144,7 +146,6 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		  printf("DAG creation failed\n");
 		}
           cond ++;}
-  PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
                       receiver);
