@@ -10,7 +10,7 @@
 #include "dev/pressure-sensor.h"
 #include "dev/light-sensor.h"
 #include "net//rpl/rpl.h"
-#include "net/rpl/rpl-dag.h"
+//#include "net/rpl/rpl-dag.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,16 +24,7 @@
 #define SEND_INTERVAL		(SEND_INTERVAL_SECONDS * CLOCK_SECOND)
 #define SEND_TIME		(random_rand() % (SEND_INTERVAL))
 
-rpl_init(); 
-uip_ipaddr_t ipaddr;
-uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0);
-uip_ds6_set_addr_iid(&ipaddr, &uip_lladdr);
-uip_ds6_addr_add(&ipaddr, 0, ADDR_AUTOCONF);
-uip_ds6_defrt_add(&ipaddr, 0);
-rpl_dag_t *dag;
-dag = rpl_set_root(RPL_DEFAULT_INSTANCE, &ipaddr);
-rpl_set_prefix(dag, &ipaddr, 64);
-rpl_set_mode(dag, RPL_MODE_NON_STORING);
+
 
 static struct simple_udp_connection broadcast_connection;
 
@@ -135,6 +126,17 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   char *eptr;
   int i;
   int u = 1;
+  rpl_init(); 
+  uip_ipaddr_t ipaddr;
+  uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0);
+  uip_ds6_set_addr_iid(&ipaddr, &uip_lladdr);
+  uip_ds6_addr_add(&ipaddr, 0, ADDR_AUTOCONF);
+  uip_ds6_defrt_add(&ipaddr, 0);
+  rpl_dag_t *dag;
+  dag = rpl_set_root(RPL_DEFAULT_INSTANCE, &ipaddr);
+  rpl_set_prefix(dag, &ipaddr, 64);
+  rpl_set_mode(dag, RPL_MODE_NON_STORING);
+ 
   PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
