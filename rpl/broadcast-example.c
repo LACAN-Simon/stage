@@ -129,23 +129,21 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   int u = 1;
   
   PROCESS_BEGIN();
-  if (cond==0){
-	  rpl_init(); 
-	  uip_ipaddr_t ipaddr;
-	  uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0);
-	  uip_ds6_set_addr_iid(&ipaddr, &uip_lladdr);
-	  uip_ds6_addr_add(&ipaddr, 0, ADDR_AUTOCONF);
-	  uip_ds6_defrt_add(&ipaddr, 0);
-	  rpl_dag_t *dag;
-	  dag = rpl_set_root(RPL_DEFAULT_INSTANCE, &ipaddr);
-	  rpl_set_prefix(dag, &ipaddr, 64);
-	  rpl_set_mode(RPL_MODE_MESH);
-	  if(dag != NULL) {
+  rpl_init(); 
+  uip_ipaddr_t ipaddr;
+  uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0);
+  uip_ds6_set_addr_iid(&ipaddr, &uip_lladdr);
+  uip_ds6_addr_add(&ipaddr, 0, ADDR_AUTOCONF);
+  uip_ds6_defrt_add(&ipaddr, 0);
+  rpl_dag_t *dag;
+  dag = rpl_set_root(RPL_DEFAULT_INSTANCE, &ipaddr);
+  rpl_set_prefix(dag, &ipaddr, 64);
+  rpl_set_mode(RPL_MODE_MESH);
+  if(dag != NULL) {
 	  printf("DAG created\n");   }
-	  else {
+   else {
 		  printf("DAG creation failed\n");
 		}
-          cond ++;}
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
                       receiver);
