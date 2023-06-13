@@ -136,7 +136,11 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   dag = rpl_set_root(RPL_DEFAULT_INSTANCE, &ipaddr);
   rpl_set_prefix(dag, &ipaddr, 64);
   rpl_set_mode(RPL_MODE_MESH);
- 
+  if(dag != NULL) {
+  printf("DAG created\n");
+} else {
+  printf("DAG creation failed\n");
+}
   PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
@@ -168,7 +172,6 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     etimer_set(&send_timer, SEND_TIME);
 
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&send_timer));
-    void rpl_neighbor_print_list(void);
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);    
     for (i=0; i<NB_PACKETS; i++) { 
