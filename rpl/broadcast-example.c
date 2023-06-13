@@ -33,7 +33,7 @@ AUTOSTART_PROCESSES(&broadcast_example_process);
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(broadcast_example_process, ev, data)
 {
-
+  int c = 0;
   rpl_init(); 
   uip_ipaddr_t ipaddr;
   uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0);
@@ -44,15 +44,13 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   dag = rpl_set_root(RPL_DEFAULT_INSTANCE, &ipaddr);
   rpl_set_prefix(dag, &ipaddr, 64);
   rpl_set_mode(RPL_MODE_MESH);
-  if(dag != NULL) {
-  printf("DAG created\n");
-} else {
-  printf("DAG creation failed\n");
-}
+
   PROCESS_BEGIN();
   
-  while(1) {
-
+  while(c<10) {
+     if(dag != NULL) {printf("DAG created\n");}
+     else {printf("DAG creation failed\n");}
+     c = c + 100;
   }
 	
   PROCESS_END();
