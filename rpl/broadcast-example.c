@@ -35,20 +35,22 @@ PROCESS_THREAD(rpl_creation,ev,data)
   dag = rpl_set_root(RPL_DEFAULT_INSTANCE, &ipaddr);
   rpl_set_prefix(dag, &ipaddr, 64);
   rpl_set_mode(RPL_MODE_MESH);
-  if(dag != NULL) {
-	  printf("DAG created\n");   }
-//   rpl_dag_t *dag = rpl_get_any_dag();
-  if(dag != NULL && dag->preferred_parent != NULL) {
-  printf("Preferred parent IP address: %u\n", dag->preferred_parent->flags);
-} else {
-  printf("No preferred parent\n");
-}
-// rpl_dag_t *dag = rpl_get_any_dag();
-if(dag != NULL) {
-  printf("Node rank: %u\n", dag->rank);
-} else {
-  printf("DAG not available\n");
-}
+  while(1){
+	  if(dag != NULL) {
+		  printf("DAG created\n");   }
+	//   rpl_dag_t *dag = rpl_get_any_dag();
+	  if(dag != NULL && dag->preferred_parent != NULL) {
+	  printf("Preferred parent IP address: %u\n", dag->preferred_parent->flags);
+	} else {
+	  printf("No preferred parent\n");
+	}
+	// rpl_dag_t *dag = rpl_get_any_dag();
+	if(dag != NULL) {
+	  printf("Node rank: %u\n", dag->rank);
+	} else {
+	  printf("DAG not available\n");
+	}
+  }
   PROCESS_END();
 }
 /*---------------------------------------------------------------------------*/
