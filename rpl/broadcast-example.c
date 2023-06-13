@@ -18,7 +18,9 @@
 
 //
 /*---------------------------------------------------------------------------*/
-PROCESS_THREAD(rpl_creation)
+PROCESS(rpl_creation, "create an rpl network");
+AUTOSTART_PROCESSES(&rpl_creation);
+PROCESS_THREAD(rpl_creation,ev,data)
 {
   printf("création du rpl");
   rpl_init(); 
