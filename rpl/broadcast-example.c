@@ -38,6 +38,7 @@ typedef struct { uint64_t state;  uint64_t inc; } pcg32_random_t;
 PROCESS(broadcast_example_process, "UDP broadcast example process");
 AUTOSTART_PROCESSES(&broadcast_example_process);
  float tab[3];
+ int cond = 0;
 /*---------------------------------------------------------------------------*/
 static void
 receiver(struct simple_udp_connection *c,
@@ -126,21 +127,23 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   char *eptr;
   int i;
   int u = 1;
-  rpl_init(); 
-  uip_ipaddr_t ipaddr;
-  uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0);
-  uip_ds6_set_addr_iid(&ipaddr, &uip_lladdr);
-  uip_ds6_addr_add(&ipaddr, 0, ADDR_AUTOCONF);
-  uip_ds6_defrt_add(&ipaddr, 0);
-  rpl_dag_t *dag;
-  dag = rpl_set_root(RPL_DEFAULT_INSTANCE, &ipaddr);
-  rpl_set_prefix(dag, &ipaddr, 64);
-  rpl_set_mode(RPL_MODE_MESH);
-  if(dag != NULL) {
-  printf("DAG created\n");
-} else {
-  printf("DAG creation failed\n");
-}
+  if (cond==0){
+	  rpl_init(); 
+	  uip_ipaddr_t ipaddr;
+	  uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0);
+	  uip_ds6_set_addr_iid(&ipaddr, &uip_lladdr);
+	  uip_ds6_addr_add(&ipaddr, 0, ADDR_AUTOCONF);
+	  uip_ds6_defrt_add(&ipaddr, 0);
+	  rpl_dag_t *dag;
+	  dag = rpl_set_root(RPL_DEFAULT_INSTANCE, &ipaddr);
+	  rpl_set_prefix(dag, &ipaddr, 64);
+	  rpl_set_mode(RPL_MODE_MESH);
+	  if(dag != NULL) {
+	  printf("DAG created\n");   }
+	  else {
+		  printf("DAG creation failed\n");
+		}
+          cond ++;}
   PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
