@@ -52,7 +52,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   PROCESS_BEGIN();
   
   while(1) {
- 	printf("la zone est quadrillée");
+
   }
 	
   PROCESS_END();
