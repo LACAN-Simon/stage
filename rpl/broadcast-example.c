@@ -37,13 +37,13 @@ PROCESS_THREAD(rpl_creation,ev,data)
   rpl_set_mode(RPL_MODE_MESH);
   if(dag != NULL) {
 	  printf("DAG created\n");   }
-  rpl_dag_t *dag = rpl_get_any_dag();
+//   rpl_dag_t *dag = rpl_get_any_dag();
   if(dag != NULL && dag->preferred_parent != NULL) {
   printf("Preferred parent IP address: %u\n", dag->preferred_parent->addr.u8[sizeof(dag->preferred_parent->addr.u8) - 1]);
 } else {
   printf("No preferred parent\n");
 }
-rpl_dag_t *dag = rpl_get_any_dag();
+// rpl_dag_t *dag = rpl_get_any_dag();
 if(dag != NULL) {
   printf("Node rank: %u\n", dag->rank);
 } else {
