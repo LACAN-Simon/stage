@@ -181,7 +181,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	else if (tabs(l,tab[0])<u && tabs(p,tab[1])>u && tabs(t,tab[2])>u){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx;P=%.2f;T=%.1f",i+id,p,t);
 		printf("Send=%s\n", send_buffer);  
-		uip_create_linklocal_allnodes_mcast(&addr);
+// 		uip_create_linklocal_allnodes_mcast(&addr);
 		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;
 		tab[1]=p;
 		tab[2]=t;		
@@ -190,7 +190,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	else if (tabs(l,tab[0])>u && tabs(p,tab[1])<u && tabs(t,tab[2])>u){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;T=%.1f",i+id,l,t);
 		printf("Send=%s\n", send_buffer);  
-		uip_create_linklocal_allnodes_mcast(&addr);
+// 		uip_create_linklocal_allnodes_mcast(&addr);
 		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;
 		tab[0]=l;
 		tab[2]=t;
@@ -199,7 +199,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	else if (tabs(l,tab[0])>u && tabs(p,tab[1])>u && tabs(t,tab[2])<u){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f",i+id,l,p);
 		printf("Send=%s\n", send_buffer);  
-		uip_create_linklocal_allnodes_mcast(&addr);
+// 		uip_create_linklocal_allnodes_mcast(&addr);
 		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;
 		tab[0]=l;
 		tab[1]=p;
@@ -208,7 +208,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	else if (tabs(l,tab[0])>u && tabs(p,tab[1])<u && tabs(t,tab[2])<u){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f",i+id,l);
 		printf("Send=%s\n", send_buffer);  
-		uip_create_linklocal_allnodes_mcast(&addr);
+// 		uip_create_linklocal_allnodes_mcast(&addr);
 		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;
 		tab[0]=l;
 	}
@@ -216,7 +216,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	else if (tabs(l,tab[0])<u && tabs(p,tab[1])>u && tabs(t,tab[2])<u){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,P=%.2f",i+id,p);
 		printf("Send=%s\n", send_buffer);  
-		uip_create_linklocal_allnodes_mcast(&addr);
+// 		uip_create_linklocal_allnodes_mcast(&addr);
 		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;
 		tab[1]=p;
 	}
@@ -224,7 +224,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	else if (tabs(l,tab[0])<u && tabs(p,tab[1])<u && tabs(t,tab[2])>u){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,T=%.1f",i+id,t);
 		printf("Send=%s\n", send_buffer);  
-		uip_create_linklocal_allnodes_mcast(&addr);
+// 		uip_create_linklocal_allnodes_mcast(&addr);
 		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;
 		tab[2]=t;
 	}
