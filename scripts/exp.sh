@@ -37,7 +37,7 @@ cd
 EXPID=$(iotlab-experiment submit -n $1 -d $2 -l $L,gnrc_networking.elf | grep id | cut -d' ' -f6)
 # Wait for the experiment to began
 iotlab-experiment wait -i $EXPID
-
+serial_aggregator
 
 # Flash nodes
 #W="115+117"
@@ -48,7 +48,6 @@ sleep 10
 cd $EXPDIR/scripts
 # Run a script for logging and seeding
 iotlab-experiment script -i $EXPID --run $SITE,script=serial_script.sh
-serial_aggregator
 
 # Wait for experiment termination 
 iotlab-experiment wait -i $EXPID --state Terminated  
