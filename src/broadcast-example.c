@@ -258,18 +258,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		uip_create_linklocal_allnodes_mcast(&addr);
 		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;
 		tab[2]=t;
-	}
-	
-	rpl_dag_t *dag = rpl_get_default_instance();
-	if (dag != NULL) {
-        printf("Le nœud est dans un réseau RPL. Rang : %u\n", dag->rank);
-    }
-	else {
-    printf("Le nœud n'est pas dans un réseau RPL.\n");
-}  
-
-
-    
+	}    
     } 
   }
 	
