@@ -124,22 +124,12 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   char *eptr;
   int i;
   int u = 1;
-  rpl_init(); 
-  uip_ipaddr_t ipaddr;
-  uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0);
-  uip_ds6_set_addr_iid(&ipaddr, &uip_lladdr);
-  uip_ds6_addr_add(&ipaddr, 0, ADDR_AUTOCONF);
-  uip_ds6_defrt_add(&ipaddr, 0);
-  rpl_dag_t *dag;
-  dag = rpl_set_root(RPL_DEFAULT_INSTANCE, &ipaddr);
-  rpl_set_prefix(dag, &ipaddr, 64);
-  rpl_set_mode(RPL_MODE_MESH);
-
   PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
                       receiver);
   clock_init();
+  uip_ip6addr(&addr, 0xfd5c, 0, 0, 0, 0, 0, 0, 1);
 
   PROCESS_YIELD();
   if (ev == serial_line_event_message) {
@@ -181,7 +171,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	if (tabs(l,tab[0])>u && tabs(p,tab[1])>u && tabs(t,tab[2])>u){
 		snprintf(send_buffer, sizeof(uint32_t)*30, "ID:%lx,L=%.2f;P=%.2f;T=%.1f",i+id,l,p,t);
 		printf("Send=%s\n", send_buffer);  
-		uip_create_linklocal_allnodes_mcast(&addr);
+		//uip_create_linklocal_allnodes_mcast(&addr);
 		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;
 		tab[0]=l;
 		tab[1]=p;
