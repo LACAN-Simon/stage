@@ -18,17 +18,7 @@ L="$SITE$LU$5"
 IOTLAB="$LOGIN@$SITE.iot-lab.info"
 CODEDIR="${HOME}/path/to/iot-lab/parts/contiki/examples/ipv6/simple-udp-rpl"
 EXPDIR="${HOME}/stage"
-#--------------------- DEFINE VARIABLES ---------------------#
 
-#----------------------- CATCH SIGINT -----------------------#
-# For a clean exit from the experiment
-trap ctrl_q INT
-function ctrl_q() {
-	echo "Terminating experiment."
-	iotlab-experiment stop -i "$EXPID"
-	exit 1
-}
-#----------------------- CATCH SIGINT -----------------------#
 
 #-------------------- CONFIGURE FIRMWARE --------------------#
 sed -i "s/#define\ SEND_INTERVAL_SECONDS\ .*/#define\ SEND_INTERVAL_SECONDS\ $3/g" $CODEDIR/broadcast-example.c
