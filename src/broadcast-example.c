@@ -262,9 +262,6 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	
 	rpl_dag_t *dag = rpl_get_default_instance();
 	if (dag != NULL) {
-   		 if (dag->is_root) {
-        	printf("Le nœud est dans un réseau RPL. Rang : 0 (racine)\n");
-    		} else {
         printf("Le nœud est dans un réseau RPL. Rang : %u\n", dag->rank);
     }
 		} else {
