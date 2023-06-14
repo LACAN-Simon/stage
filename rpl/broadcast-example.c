@@ -129,7 +129,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
                       NULL, UDP_PORT,
                       receiver);
   clock_init();
-  uip_ip6addr(&addr, 0xfd5c, 0, 0, 0, 0, 0, 0, 1);
+  uip_ip6addr(&addr, 0xfe80, 0, 0, 0, 0x5cc2, 0xf20f, 0xba77, 0xa63b);
 
   PROCESS_YIELD();
   if (ev == serial_line_event_message) {
