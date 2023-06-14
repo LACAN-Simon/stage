@@ -10,7 +10,7 @@
 #include "dev/pressure-sensor.h"
 #include "dev/light-sensor.h"
 #include "net//rpl/rpl.h"
-#include "net/rpl/rpl-dag.h"
+// #include "net/rpl/rpl-dag.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -134,20 +134,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
   dag = rpl_set_root(RPL_DEFAULT_INSTANCE, &ipaddr);
   rpl_set_prefix(dag, &ipaddr, 64);
   rpl_set_mode(RPL_MODE_MESH);
-  if(dag != NULL) {
-		  printf("DAG created\n");   }
-	//   rpl_dag_t *dag = rpl_get_any_dag();
-   if(dag != NULL && dag->preferred_parent != NULL) {
-	  printf("Preferred parent IP address: %u\n", dag->preferred_parent->flags);
- } else {
-	  printf("No preferred parent\n");
-	}
-	// rpl_dag_t *dag = rpl_get_any_dag();
-  if(dag != NULL) {
-	  printf("Node rank: %u\n", dag->rank);}
- else {
-	  printf("DAG not available\n");
-	}
+
   PROCESS_BEGIN();
   simple_udp_register(&broadcast_connection, UDP_PORT,
                       NULL, UDP_PORT,
@@ -252,7 +239,20 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		tab[2]=t;
 	}
 
-    
+         if(dag != NULL) {
+		  printf("DAG created\n");   }
+	//   rpl_dag_t *dag = rpl_get_any_dag();
+        if(dag != NULL && dag->preferred_parent != NULL) {
+	  printf("Preferred parent IP address: %u\n", dag->preferred_parent->flags);
+ }      else {
+	  printf("No preferred parent\n");
+	}
+	// rpl_dag_t *dag = rpl_get_any_dag();
+       if(dag != NULL) {
+	  printf("Node rank: %u\n", dag->rank);}
+        else {
+	  printf("DAG not available\n");
+	}
     } 
   }
 	
