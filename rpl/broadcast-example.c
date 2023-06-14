@@ -238,21 +238,6 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;
 		tab[2]=t;
 	}
-
-         if(dag != NULL) {
-		  printf("DAG created\n");   }
-	//   rpl_dag_t *dag = rpl_get_any_dag();
-        if(dag != NULL && dag->preferred_parent != NULL) {
-	  printf("Preferred parent IP address: %u\n", dag->preferred_parent->flags);
- }      else {
-	  printf("No preferred parent\n");
-	}
-	// rpl_dag_t *dag = rpl_get_any_dag();
-       if(dag != NULL) {
-	  printf("Node rank: %u\n", dag->rank);}
-        else {
-	  printf("DAG not available\n");
-	}
     } 
   }
 	
