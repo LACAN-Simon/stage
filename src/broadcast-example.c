@@ -260,18 +260,18 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		tab[2]=t;
 	}
 	
-        rpl_print_neighbor_list();
-	    
-	/*if (dag != NULL) {
-	    if (rpl_is_dag_created(dag)) {
-		uint16_t rank = rpl_get_dag_rank(dag);
-		printf("Le nœud est dans un réseau RPL. Rang : %u\n", rank);
-	    } else {
-		printf("Le nœud est dans un réseau RPL, mais aucun DAG n'est créé.\n");
-	    }
-	} else {
-	    printf("Le nœud n'est pas dans un réseau RPL.\n");
-}*/
+	rpl_dag_t *dag = rpl_get_default_instance();
+	if (dag != NULL) {
+   		 if (dag->is_root) {
+        	printf("Le nœud est dans un réseau RPL. Rang : 0 (racine)\n");
+    		} else {
+        printf("Le nœud est dans un réseau RPL. Rang : %u\n", dag->rank);
+    }
+		} else {
+    printf("Le nœud n'est pas dans un réseau RPL.\n");
+}  
+
+}
     
     } 
   }
