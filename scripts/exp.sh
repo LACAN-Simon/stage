@@ -41,18 +41,22 @@ make TARGET=iotlab-m3 -j8 || { echo "Compilation failed."; exit 1; }
 #--------------------- COMPILE FIRMWARE ---------------------#
 
 #-------------------- LAUNCH EXPERIMENTS --------------------#
-cd $EXPDIR/scripts
 
 # Launch the experiment and obtain its ID
-EXPID=$(iotlab-experiment submit -n $1 -d $2 -l $L | grep id | cut -d' ' -f6)
+EXPID=$(iotlab-experiment submit -n $1 -d $2 -l $L,gnrc_networking.elf | grep id | cut -d' ' -f6)
 # Wait for the experiment to began
 iotlab-experiment wait -i $EXPID
+
+serial_aggregator
+
+
 # Flash nodes
 #W="115+117"
 #T="$SITE$LU$W"
 iotlab-node --flash $CODEDIR/broadcast-example.iotlab-m3 -i $EXPID 
 # Wait for contiki
 sleep 10
+cd $EXPDIR/scripts
 # Run a script for logging and seeding
 iotlab-experiment script -i $EXPID --run $SITE,script=serial_script.sh
 # Wait for experiment termination 
