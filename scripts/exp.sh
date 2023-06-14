@@ -22,8 +22,8 @@ EXPDIR="${HOME}/stage"
 
 #----------------------- CATCH SIGINT -----------------------#
 # For a clean exit from the experiment
-trap ctrl_c INT
-function ctrl_c() {
+trap ctrl_q INT
+function ctrl_q() {
 	echo "Terminating experiment."
 	iotlab-experiment stop -i "$EXPID"
 	exit 1
