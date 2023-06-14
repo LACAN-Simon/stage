@@ -22,4 +22,4 @@ do
 done
 sleep 1
 
-#serial_aggregator -i ${EXP_ID} 2> /dev/null 1> ${OUTFILE}
+serial_aggregator -i ${EXP_ID} 2> /dev/null 1> ${OUTFILE}
