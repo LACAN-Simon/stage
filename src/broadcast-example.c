@@ -42,7 +42,7 @@
 #include "dev/pressure-sensor.h"
 #include "dev/light-sensor.h"
 #include "net//rpl/rpl.h"
-// #include "net/rpl/rpl-dag.h"
+#include "net/rpl/rpl-dag.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -259,8 +259,10 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 		simple_udp_sendto(&broadcast_connection,send_buffer,sizeof(send_buffer), &addr) ;
 		tab[2]=t;
 	}
-	rpl_dag_t *dag = rpl_get_any_dag();
-	if (dag != NULL) {
+	
+        rpl_print_neighbor_list();
+	    
+	/*if (dag != NULL) {
 	    if (rpl_is_dag_created(dag)) {
 		uint16_t rank = rpl_get_dag_rank(dag);
 		printf("Le nœud est dans un réseau RPL. Rang : %u\n", rank);
@@ -269,7 +271,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	    }
 	} else {
 	    printf("Le nœud n'est pas dans un réseau RPL.\n");
-}
+}*/
     
     } 
   }
