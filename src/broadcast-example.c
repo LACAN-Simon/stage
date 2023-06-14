@@ -42,7 +42,7 @@
 #include "dev/pressure-sensor.h"
 #include "dev/light-sensor.h"
 #include "net//rpl/rpl.h"
-#include "net/rpl/rpl-dag.h"
+// #include "net/rpl/rpl-dag.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -187,7 +187,7 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
     etimer_set(&send_timer, SEND_TIME);
 
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&send_timer));
-    void rpl_neighbor_print_list(void);
+//     void rpl_neighbor_print_list(void);
     //id = nid * clock_seconds();
     id = pcg32_random_r(&rng);    
     for (i=0; i<NB_PACKETS; i++) { 
