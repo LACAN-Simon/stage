@@ -40,7 +40,7 @@ iotlab-experiment wait -i $EXPID
 
 serial_aggregator
 
-
+ip -6 route show table main
 # Flash nodes
 #W="115+117"
 #T="$SITE$LU$W"
@@ -51,6 +51,7 @@ cd $EXPDIR/scripts
 # Run a script for logging and seeding
 iotlab-experiment script -i $EXPID --run $SITE,script=serial_script.sh
 # Wait for experiment termination 
+ip -6 route show table main
 iotlab-experiment wait -i $EXPID --state Terminated  
 #-------------------- LAUNCH EXPERIMENTS --------------------#
 
