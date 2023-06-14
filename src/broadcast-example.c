@@ -264,11 +264,11 @@ PROCESS_THREAD(broadcast_example_process, ev, data)
 	if (dag != NULL) {
         printf("Le nœud est dans un réseau RPL. Rang : %u\n", dag->rank);
     }
-		} else {
+	else {
     printf("Le nœud n'est pas dans un réseau RPL.\n");
 }  
 
-}
+
     
     } 
   }
