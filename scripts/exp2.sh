@@ -48,8 +48,10 @@ iotlab-experiment wait -i $EXPID
 #W="115+117"
 #T="$SITE$LU$W"
 iotlab-node --flash $CODEDIR/broadcast-example.iotlab-m3 -i $EXPID 
-serial_aggregator 
-
+sleep 10
+cd $EXPDIR/scripts
+# Run a script for logging and seeding
+iotlab-experiment script -i $EXPID --run $SITE,script=serial_script.sh
 # Wait for contiki
 sleep 10
 # Wait for experiment termination 
