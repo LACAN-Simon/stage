@@ -33,7 +33,6 @@ make TARGET=iotlab-m3 -j8 || { echo "Compilation failed."; exit 1; }
 #-------------------- LAUNCH EXPERIMENTS --------------------#
 
 # Launch the experiment and obtain its ID
-cd 
 EXPID=$(iotlab-experiment submit -n $1 -d $2 -l $L,gnrc_networking.elf | grep id | cut -d' ' -f6)
 # Wait for the experiment to began
 iotlab-experiment wait -i $EXPID
